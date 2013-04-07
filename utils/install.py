@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import errno
 import logging
 import os
 import re
@@ -43,6 +44,29 @@ def map_file(file_map, d, f):
         raise ValueError('File {} does not match any rules.'.format(f))
 
 
+def install_file(source, dest):
+    dest = os.path.expanduser(dest)
+
+    try:
+        dirname = os.path.dirname(dest)
+        if dirname:
+            os.makedirs(dirname)
+    except OSError as e:
+        # Error 'File Exists' is ok, all others are a problem.
+        if e.errno != errno.EEXIST:
+            raise
+
+    if os.path.exists(dest):
+        if os.path.samefile(source, dest):
+            return True
+        else:
+            print 'Not replacing existing file {} with {}.'.format(dest, source)
+            return False
+    else:
+        print 'Linking {} to {}'.format(source, dest)
+        os.link(source, dest)
+
+
 class ChangeDir(object):
     def __init__(self, path):
         self.path = path
@@ -71,7 +95,9 @@ def main():
             # Remove leading ./ or .
             root = re.sub(r'^./?', '', root)
             for f in files:
-                print map_file(file_map, root, f)
+                dest = map_file(file_map, root, f)
+                if dest is not None:
+                    install_file(os.path.join(root, f), dest)
 
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.dirname(__file__)))
