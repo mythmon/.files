@@ -1,0 +1,3 @@
+.*\.swp -- !ignore
+dot.zshrc.d/([^.].*) -- ~/.zshrc.d/\1
+dot(\..*) -- ~/\1
