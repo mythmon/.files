@@ -1,0 +1,28 @@
+Dotfiles
+========
+
+I hope you know what these are. This is dotfiles2 because my other dot files
+repository fell into disuse when I tried to replace it with a Puppet system.
+I've stopped  using both, so this is the second dotfiles repo.
+
+Files
+-----
+Dot files go in the `configs/` directory. The script `utils/install.py` puts
+the files in their place, and the file `map` dictates where that is.
+
+Map
+---
+The `map` file informs `install.py` where to hardlink files to. Each line has a
+left and a right side. The left side is a regex that is run against files in
+the `configs/` dir, and the right side indicates where on the system the
+matched files should be place. The left and right side are separated by the
+string `' -- '`.
+
+The match regex is only run against files, not directories. If the match regex
+contains a `/`, it will be matches against the full path of the file, and if
+not it will only be matched against the filename. Additionally, if the regex
+does not contain a `/`, the path that the file was found in in the  configs
+directory will be prepended to the destination.
+
+There is a special value for the right side, `!ignore`, which causes the file
+to remain unlinked. This is useful for things like vim .swp files.
