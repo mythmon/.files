@@ -31,6 +31,8 @@ def map_file(file_map, d, f):
         match = re.match(find, source)
 
         if match:
+            if repl == '!ignore':
+                return None
             ret = re.sub(find, repl, source)
 
             if includes_path:
@@ -38,7 +40,7 @@ def map_file(file_map, d, f):
             else:
                 return os.path.join(d, ret)
     else:
-        raise ValueError('File {} does not match any rules.')
+        raise ValueError('File {} does not match any rules.'.format(f))
 
 
 class ChangeDir(object):
