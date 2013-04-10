@@ -23,8 +23,6 @@ preexec_prompt () {
     ODIR="$(pwd)"
 }
 
-add-zsh-hook preexec preexec_prompt
-
 # Called right before drawing a prompt.
 precmd_prompt () {
     lastexit=$?
@@ -54,11 +52,6 @@ precmd_prompt () {
                     exechr=$(($execmin/60))
                     execmin=$(($execmin%60))
                     lasttime="${exechr}h${execmin}m${execsec}s"
-                    if [ $exechr -ge 36 ] ; then
-                        execday=$(($exechr/24))
-                        exechr=$(($exechr%24))
-                        lasttime="${execday}d${exechr}h${execmin}m"
-                    fi
                 fi
             fi
             echo "Runtime: $lasttime"
@@ -91,10 +84,8 @@ precmd_prompt () {
     fi
 }
 
+add-zsh-hook preexec preexec_prompt
 add-zsh-hook precmd precmd_prompt
-
 
 PROMPT='${psat}${pshost}> '
 RPROMPT='${pspath}${psvcs}'
-
-#EOF vim: ft=zsh
