@@ -22,3 +22,8 @@ fi
 if ( which vim &> /dev/null ); then
     alias vim='vim -p'
 fi
+
+# (task) taskwarrior -> alias T
+if ( which task &> /dev/null ); then
+    alias T='task'
+fi
