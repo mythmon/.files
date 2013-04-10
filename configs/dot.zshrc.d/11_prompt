@@ -76,12 +76,6 @@ precmd_prompt () {
     else
         psvcs=""
     fi
-
-    if [[ -z $(ssh-add -l) ]]; then
-        keychain=" "
-    else
-        keychain="%F{cyan}⚷%f"
-    fi
 }
 
 add-zsh-hook preexec preexec_prompt
