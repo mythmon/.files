@@ -82,4 +82,4 @@ add-zsh-hook preexec preexec_prompt
 add-zsh-hook precmd precmd_prompt
 
 PROMPT='${psat}${pshost}> '
-RPROMPT='${pspath}${psvcs}'
+RPROMPT='$(vi_mode_prompt_info)${pspath}${psvcs}'

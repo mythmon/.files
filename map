@@ -1,4 +1,5 @@
 .*\.swp -- !ignore
+\.git -- !ignore
 dot.zshrc.d/([^.].*) -- ~/.zshrc.d/\1
-zsh-vim-mode/zsh-vim-mode.plugin.zsh -- ~/.zshrc.d/22_vim_mode
+zsh-vim-mode/zsh-vim-mode.plugin.zsh -- ~/.zshrc.d/11_vim_mode
 dot(\..*) -- ~/\1
