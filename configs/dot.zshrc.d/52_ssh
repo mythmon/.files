@@ -1,4 +1,4 @@
-keychain --quiet --quick --agents ssh --inherit any $HOME/.ssh/id_rsa.pub
+keychain --quiet --quick --agents ssh --inherit any $HOME/.ssh/id_rsa
 source $HOME/.keychain/$(hostname)-sh
 
 # vim: ft=zsh
