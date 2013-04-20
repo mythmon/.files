@@ -1,0 +1,79 @@
+border_inner_margin 0
+cpu_avg_samples 3
+default_color white
+default_outline_color white
+default_shade_color white
+double_buffer 1
+draw_graph_borders no
+draw_outline no
+draw_shades no
+use_xft yes
+xftfont Dina:size=8
+gap_x 250
+gap_y 0
+maximum_width 1254
+minimum_size 1254 0
+net_avg_samples 2
+no_buffers yes
+own_window yes
+own_window_colour 101010
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+own_window_type dock
+pad_percents 2
+short_units yes
+update_interval 1.0
+update_interval_on_battery 10.0
+use_spacer left
+
+#lua_load /home/mythmon/.conky.d/learn.lua
+#lua_draw_hook_post main
+
+color0 ffffff
+color1 888888
+color2 268bd2
+
+TEXT
+${color1}${font PizzaDude Bullets:size=8}Y${font}${color0} \
+${cpu}% \
+${cpugraph 12,40} \
+${freq_g}GHz \
+${color2}|${color0} \
+\
+${color1}${font Pizzadude Bullets:size=8}8${font}${color0} \
+${loadavg 2} \
+${loadgraph 12,40 4} \
+${color2}|${color0} \
+\
+${color1}${font Pizzadude Bullets:size=8}~${font}${color0} \
+${mem} \
+${memgraph 12,40} \
+${color2}|${color0} \
+\
+${color1}${font PizzaDude Bullets:size=8}Z${font}${color0} \
+R:${diskio_read} \
+${diskiograph_read 12,40 00FF00 00FF00}\
+W:${diskio_write} \
+${diskiograph_write 12,40 FF0000 FF0000}\
+${color2}|${color0} \
+\
+${if_match "${smapi bat 0 state}" == "charging"}\
+${color #00ff00}\
+${else}${if_match "${smapi bat 0 state}" == "discharging"}\
+${color #ff0000}\
+${else}\
+${endif}\
+${endif}\
+\
+${font Heydings Icons:size=8}r${font}\
+${color0} \
+${smapi_bat_perc 0}% \
+${color2}|${color0} \
+\
+${color1}${voffset -4}${font Heydings Icons:size=10}3${font}${color0} \
+${wireless_essid wlan0} \
+${addr wlan0} \
+\
+${alignr}\
+${color1}${time %Y-%m-%d}${color0} \
+${time %H:%M:%S} \
+${color2}|${color0}
