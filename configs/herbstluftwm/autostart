@@ -134,5 +134,15 @@ done
 # Wallpapers!
 feh -z --bg-fill ~/Dropbox/Apps/Desktoppr/*
 
+function ensure() {
+    pgrep $1 || $1 &
+}
+
+ensure stalonetray
+ensure conky
+ensure dunst
+ensure blumean-applet
+ensure nm-applet
+
 # unlock, just to be sure
 hc unlock
