@@ -1,0 +1,8 @@
+frame           !
+fps             frame / second
+
+pixel           !
+px              pixel
+
+ppi             pixel / inch
+dpi             ppi
