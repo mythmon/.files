@@ -1,4 +1,7 @@
 .*\.swp -- !ignore
+
 dot.zshrc.d/([^.].*) -- ~/.zshrc.d/\1
-dot(\..*) -- ~/\1
 herbstluftwm/(.*) -- ~/.config/herbstluftwm/\1
+bin/(.*) -- ~/bin/\1
+
+dot(\..*) -- ~/\1

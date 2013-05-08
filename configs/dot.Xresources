@@ -1,0 +1,66 @@
+URxvt.background: black
+URxvt.foreground: grey
+URxvt.scrollBar: false
+URxvt.cursorBlink: true
+URxvt.imLocale: en_US.utf8
+URxvt.termName: screen-256color-bce
+URxvt.fading: 10
+URxvt.saveLines: 65535
+URxvt.visualBall: true
+URxvt.lineSpace: 1
+
+URxvt.perl-ext-common: default,url-select
+URxvt.url-select.launcher: urxvt_launcher
+URxvt.url-select.underline: true
+URxvt.url-select.button: 3
+URxvt.matcher.pattern.1: \\b(https?:\/\/[^ ]+)\\b
+URxvt.matcher.pattern.2: \\b(subl:\/\/[^ ]+)\\b
+
+URxvt.iso14755_52: false
+URxvt.iso14755: false
+
+! Fake transparency
+URxvt.inheritPixmap: true
+URxvt.transparent: true
+URxvt.shading: 12
+URxvt.tintColor: white
+
+! Font
+URxvt.font: xft:Inconsolata for Powerline:style=Medium:pixelsize=13
+
+
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+URxvt*scrollTtyKeypress: true
+URxvt*saveLines: 1000000
+
+!Color scheme:
+URxvt*background: #2B2B2B
+URxvt*foreground: #DEDEDE
+
+URxvt*colorUL: #86a2b0
+
+! black
+URxvt*color0  : #2E3436
+URxvt*color8  : #555753
+! red
+URxvt*color1  : #CC0000
+URxvt*color9  : #EF2929
+! green
+URxvt*color2  : #4E9A06
+URxvt*color10 : #8AE234
+! yellow
+URxvt*color3  : #C4A000
+URxvt*color11 : #FCE94F
+! blue
+URxvt*color4  : #3465A4
+URxvt*color12 : #729FCF
+! magenta
+URxvt*color5  : #75507B
+URxvt*color13 : #AD7FA8
+! cyan
+URxvt*color6  : #06989A
+URxvt*color14 : #34E2E2
+! white
+URxvt*color7  : #D3D7CF
+URxvt*color15 : #EEEEEC

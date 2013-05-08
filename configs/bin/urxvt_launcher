@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "$@" >> /home/mythmon/.launcher.log
+
+if [[ $1 == 'subl://'* ]]; then
+    path=$(echo $1 | cut -c 8-)
+    exec subl $path
+else
+    exec browser $1
+fi
