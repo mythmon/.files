@@ -132,7 +132,7 @@ for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
 done
 
 # Wallpapers!
-feh -z --bg-fill ~/Dropbox/Apps/Desktoppr/*
+xsetroot -solid \#111111
 
 function ensure() {
     pgrep $1 || $1 &
