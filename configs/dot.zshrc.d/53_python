@@ -4,4 +4,8 @@ export PIP_DOWNLOAD_CACHE="$HOME/.pip_cache"
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
+# Nose progressive template to use subl:// links
+export NOSE_PROGRESSIVE_EDITOR_SHORTCUT_TEMPLATE='  {dim_format}subl://{path}:{line_number}{normal}{function_format}{hash_if_function}{function}{normal}'
+export NOSE_PROGRESSIVE_ABSOLUTE_PATHS=1
+
 # vim: filetype=zsh
