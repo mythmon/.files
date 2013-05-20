@@ -26,7 +26,7 @@ URxvt.shading: 12
 URxvt.tintColor: white
 
 ! Font
-URxvt.font: xft:Inconsolata for Powerline:style=Medium:pixelsize=13
+!URxvt.font: xft:Inconsolata for Powerline:style=Medium:pixelsize=13
 
 
 URxvt*scrollTtyOutput: false
