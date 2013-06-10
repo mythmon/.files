@@ -27,3 +27,8 @@ fi
 if ( which task &> /dev/null ); then
     alias T='task'
 fi
+
+# Stackato -> kato
+if ( which stackato &> /dev/null ); then
+    alias kato='stackato'
+fi

@@ -68,7 +68,12 @@ esac
 
 PATH="$HOME/bin:$PATH:$HOME/.cabal/bin"
 
+export PATH="$HOME/bin:$PATH:$HOME/.gem/ruby/2.0.0/bin"
 export EDITOR="vim"
+
+if [[ -d ~/.nvm ]]; then
+    source ~/.nvm/nvm.sh
+fi
 
 alias ls='ls --color=if-tty --group-directories-first -hF'
 alias rm='rm -r'
