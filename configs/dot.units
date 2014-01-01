@@ -6,3 +6,18 @@ px              pixel
 
 ppi             pixel / inch
 dpi             ppi
+
+gee             9.81 m / s / s
+
+person          !
+people          person
+
+cookie          !
+cps             cookie / second
+click           !
+
+ldap            90 days
+
+int             4 bytes
+float           4 bytes
+double          4 bytes

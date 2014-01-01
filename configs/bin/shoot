@@ -1,0 +1,12 @@
+function uploadImage {
+  curl -s -F "image=@$1" -F "key=ffadcde69a14ac88bcec5ba71604b16d" http://imgur.com/api/upload.xml | grep -E -o "<original_image>(.)*</original_image>" | grep -E -o "http://i.imgur.com/[^<]*"
+}
+
+scrot -s "/tmp/shot.png" 
+if [ $? -eq 0 ]; then
+    uploadImage "/tmp/shot.png" | xclip
+    rm "/tmp/shot.png"
+    notify-send "Uploaded screenshot to imgur. URL is on the clipboard."
+else
+    notify-send "Screenshot cancelled."
+fi

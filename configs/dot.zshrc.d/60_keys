@@ -1,0 +1,6 @@
+if tty | grep pts >/dev/null 2>&1; then
+    bindkey -e
+    bindkey "[3~" delete-char
+    bindkey "[7~" beginning-of-line
+    bindkey "[8~" end-of-line
+fi

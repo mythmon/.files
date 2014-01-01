@@ -1,0 +1,9 @@
+#!/bin/bash
+IMG="/tmp/shot_$$.png"
+scrot -s $IMG
+if [ $? -eq 0 ]; then
+    echo $IMG | xclip
+    notify-send "Saved image to $IMG Path on the clipboard."
+else
+    notify-send "Screenshot cancelled."
+fi

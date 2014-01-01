@@ -1,7 +1,9 @@
 #!/bin/bash
 
+TITLE=$(echo $1 | tr '\n\r' ' ')
+
 if [ "x$WINDOW" != "x" ]; then
-    echo -ne "\ek$1\e\\"
+    echo -ne "\ek${TITLE}\e\\"
 else
-    echo -ne "\e]0;$1\a"
+    echo -ne "\e]0;${TITLE}\a"
 fi

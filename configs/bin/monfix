@@ -1,0 +1,76 @@
+#!/usr/bin/ruby
+
+xrandr = `xrandr --current`
+lines = xrandr.split(/\n/)
+i = 0
+wait_for_mon = true
+always_mon = /LVDS-?\d/
+
+monitors = []
+
+lines.each do |l|
+  if /^([\w\d\-]*) connected (\d+x\d+)?/ =~ l
+    monitors.push({
+      'name' => $1,
+      'cur_resolution' => $2,
+      'on' => true,
+      'resolution' => nil,
+    })
+    wait_for_mon = false
+  elsif /^([\w\d]*) disconnected/ =~ l
+    monitors.push({
+      'name' => $1,
+      'cur_resolution' => nil,
+      'on' => false,
+      'resolution' => nil
+    })
+    wait_for_mon = false
+  elsif /^   (\d+x\d+) / =~ l and not wait_for_mon
+    monitors[-1]['resolution'] = $1
+    wait_for_mon = true
+  end
+end
+
+order = [/^LVDS.*/, /^DP.*/, /^VGA.*/]
+
+def index_regex(array, str)
+  array.each_with_index { |item, i|
+    if str =~ item
+      return i
+    end
+  }
+end
+
+monitors.sort! { |a, b|
+  index_regex(order, a['name']) <=> index_regex(order, b['name'])
+}
+
+command_on = 'xrandr'
+command_off = 'xrandr'
+left = nil
+monitors.each do |mon|
+  if mon['on']
+    command_on += " --output #{mon['name']} --mode #{mon['resolution']}"
+    command_on += " --right-of #{left['name']}" if left
+    left = mon
+
+    unless always_mon.match(mon['name'])
+      command_off += " --output #{mon['name']} --off"
+    end
+  else
+    command_on += " --output #{mon['name']} --off"
+  end
+end
+
+#`#{command_off}`
+`#{command_on}`
+
+`herbstclient detect_monitors`
+`herbstclient emit_hook quit_panel`
+monitors.length.times do |mon_num|
+    puts "starting panel for #{mon_num}"
+    fork do
+        Process.daemon
+        exec ENV['HOME'] + "/.config/herbstluftwm/panel.sh", mon_num.to_s
+    end
+end

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function hc() {
+    herbstclient "$@"
+}
+
+if [[ $(hc attr clients.focus.title) != "IRC" ]]; then
+    notify-send "$@"
+fi

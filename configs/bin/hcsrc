@@ -1,0 +1,40 @@
+#!/bin/bash
+
+function hc() {
+    herbstclient "$@"
+}
+
+spawn_with_rules() {(
+    herbstclient rule once pid=$BASHPID maxage=10 "${RULES[@]}"
+    exec "$@"
+    ) &
+}
+
+LAYOUT="(split horizontal:0.76:0 (clients max:0) (split vertical:0.9:0 (clients vertical:0) (clients vertical:0)))"
+
+PROJECT=$(ls ${HOME}/src | dmenu -p "Project: ")
+[[ -z $PROJECT ]] && echo "No project" && exit 1
+DIR="${HOME}/src/${PROJECT}"
+[[ ! -d $DIR ]] && echo "Project '$PROJECT' not found." && exit 2
+
+TAG=$(hc tag_status | tr '\t' '\n' | sed -n 's/^#//p')
+
+hc load "$TAG" "$LAYOUT"
+renametag "$PROJECT"
+
+cd "$DIR"
+
+RULES=( index=0 focus=on )
+SUBL_PROJ="${HOME}/.config/sublime-text-3/Projects/${PROJECT}.sublime-project"
+if [ -e $SUBL_PROJ ]; then
+    spawn_with_rules subl --project $SUBL_PROJ
+else
+    spawn_with_rules subl "$DIR"
+fi
+
+RULES=( index=10 focus=off )
+spawn_with_rules urxvt
+spawn_with_rules urxvt
+
+RULES=( index=11 focus=off )
+spawn_with_rules urxvt

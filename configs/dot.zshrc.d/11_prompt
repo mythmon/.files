@@ -1,6 +1,9 @@
 autoload promptinit
 promptinit
 
+# Show time for long running processes.
+REPORTTIME=2
+
 setopt prompt_subst
 
 autoload -Uz vcs_info
@@ -17,8 +20,6 @@ fi
 preexec_prompt () {
     resetpromptcount="0"
     # post-command prompt gets a long time and a short tty
-    pstime=" %F{cyan}%*%f"  # for post-command prompt
-    psstarttime=$(date +%s)
     lasttime=""
     ODIR="$(pwd)"
 }
@@ -26,7 +27,6 @@ preexec_prompt () {
 # Called right before drawing a prompt.
 precmd_prompt () {
     lastexit=$?
-    pstime="%F{brgreen}%T%f"
     pspath="%F{green}%~%f"
     pshost="%F{$(hash_color $(hostname))}%m%f"
     psuser="%n"
@@ -36,28 +36,6 @@ precmd_prompt () {
     else
         psat="%F{9}$lastexit@%f"
     fi
-
-    # If the last command took longer than some time to run, say so.
-    if [ -n "$psstarttime" ] ; then
-        exectimeraw=$(($(date +%s)-$psstarttime))
-        if [ $exectimeraw -gt 30 ] ; then
-            if [ $exectimeraw -lt 100 ] ; then
-                lasttime="${exectimeraw}s"
-            else
-                execmin=$(($exectimeraw/60))
-                execsec=$(($exectimeraw%60))
-                if [ $execmin -lt 100 ] ; then
-                    lasttime="${execmin}m${execsec}s"
-                else
-                    exechr=$(($execmin/60))
-                    execmin=$(($execmin%60))
-                    lasttime="${exechr}h${execmin}m${execsec}s"
-                fi
-            fi
-            echo "Runtime: $lasttime"
-        fi
-    fi
-    psstarttime=""
 
     vcs_info
     if [[ -n $vcs_info_msg_0_ ]] ; then

@@ -19,21 +19,22 @@ hc keyunbind --all
 Mod=Mod4
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
-hc keybind $Mod-Return spawn urxvt
-hc keybind $Mod-space spawn dmenu_run
+hc keybind $Mod-Return spawn urxvtc
+hc keybind $Mod-space spawn dmenu-launch
 hc keybind $Mod-Escape spawn ${HOME}/bin/lock
 hc keybind $Mod-Shift-Escape spawn ${HOME}/bin/suspend
 hc keybind $Mod-n spawn renametag
 hc keybind $Mod-w spawn hcsrc
+hc keybind $Mod-m spawn ${HOME}/bin/monfix
 
 # Volume bindings
-hc keybind $Mod-Alt-j spawn amixer set Master,0 5%-
-hc keybind $Mod-Alt-k spawn amixer set Master,0 5%+
-hc keybind $Mod-Alt-l spawn amixer set Master,0 toggle
-# And the labeled Fn+keys
-hc keybind XF86AudioLowerVolume spawn amixer set Master,0 5%-
-hc keybind XF86AudioRaiseVolume spawn amixer set Master,0 5%+
-hc keybind XF86AudioMute spawn amixer set Master,0 toggle
+hc keybind $Mod-Alt-j spawn ${HOME}/bin/vol down
+hc keybind $Mod-Alt-k spawn ${HOME}/bin/vol up
+hc keybind $Mod-Alt-l spawn ${HOME}/bin/vol toggle
+# Dedicated audio keys
+hc keybind XF86AudioRaiseVolume spawn ${HOME}/bin/vol up
+hc keybind XF86AudioLowerVolume spawn ${HOME}/bin/vol down
+hc keybind XF86AudioMute spawn amixer ${HOME}/bin/vol toggle
 # Media bindings.
 hc keybind XF86AudioPlay spawn spotify-remote playpause
 hc keybind XF86AudioNext spawn spotify-remote next
@@ -63,7 +64,8 @@ hc keybind $Mod-Left   use_index -1
 
 # layouting
 hc keybind $Mod-r remove
-hc keybind $Mod-Tab cycle_layout 1
+hc keybind $Mod-Tab use_previous
+hc keybind $Mod-backslash cycle_layout 1
 hc keybind $Mod-u split vertical 0.5
 hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-s floating toggle
@@ -118,14 +120,15 @@ hc unrule -F
 hc rule focus=on # Normally focus new windows.
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
-hc rule class~'Spotify' tag=0
+# Move all spotifys to tag 0
+hc rule class=Spotify tag=0
 
 # Set up multi monitors
-${HOME}/bin/monfix
 hc detect_monitors
 
 # find the panel
 panel=~/.config/herbstluftwm/panel.sh
+pkill panel.sh
 [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
     $panel $monitor &

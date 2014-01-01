@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+    PROFILE=firefox-tmp-$$
+else
+    PROFILE=firefox-tmp-$1
+fi
+
+mkdir /tmp/$PROFILE
+MOZ_NO_REMOTE=0 HOME=/tmp/$PROFILE firefox
+rm -rf /tmp/$PROFILE

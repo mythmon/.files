@@ -56,6 +56,9 @@ W:${diskio_write} \
 ${diskiograph_write 12,40 FF0000 FF0000}\
 ${color2}|${color0} \
 \
+${battery}\
+\
+${if_match "0" == "1"}\
 ${if_match "${smapi bat 0 state}" == "charging"}\
 ${color #00ff00}\
 ${else}${if_match "${smapi bat 0 state}" == "discharging"}\
@@ -67,11 +70,12 @@ ${endif}\
 ${font Heydings Icons:size=8}r${font}\
 ${color0} \
 ${smapi_bat_perc 0}% \
+${endif}\
 ${color2}|${color0} \
 \
 ${color1}${voffset -4}${font Heydings Icons:size=10}3${font}${color0} \
-${wireless_essid wlan0} \
-${addr wlan0} \
+${wireless_essid wlp3s0} \
+${addr wlp3s0} \
 \
 ${alignr}\
 ${color1}${time %Y-%m-%d}${color0} \

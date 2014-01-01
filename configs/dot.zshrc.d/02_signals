@@ -1,5 +1,7 @@
 TRAPUSR1() {
   source $HOME/.zshrc
+  rm -f ~/.zcompdump
+  compinit
 }
 
 function reload() {

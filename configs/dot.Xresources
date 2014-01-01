@@ -4,7 +4,7 @@ URxvt.scrollBar: false
 URxvt.cursorBlink: true
 URxvt.imLocale: en_US.utf8
 URxvt.termName: screen-256color-bce
-URxvt.fading: 10
+URxvt.fading: 0
 URxvt.saveLines: 65535
 URxvt.visualBall: true
 URxvt.lineSpace: 1
@@ -15,6 +15,7 @@ URxvt.url-select.underline: true
 URxvt.url-select.button: 3
 URxvt.matcher.pattern.1: \\b(https?:\/\/[^ ]+)\\b
 URxvt.matcher.pattern.2: \\b(subl:\/\/[^ ]+)\\b
+URxvt.matcher.pattern.3: \\b(file:\/\/\/[^ ]+)\\b
 
 URxvt.iso14755_52: false
 URxvt.iso14755: false
@@ -22,13 +23,21 @@ URxvt.iso14755: false
 ! Fake transparency
 URxvt.inheritPixmap: true
 URxvt.transparent: true
-URxvt.shading: 12
+URxvt.shading: 0
 URxvt.tintColor: white
 
 ! Font
-!URxvt.font: xft:Inconsolata for Powerline:style=Medium:pixelsize=13
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hinstyle: hintsligh
 
+URxvt.font: xft:Dina:style=Regular:size=8,\
+            xft:Ubuntu Mono:style=Regular:size=9, \
+            xft:HAN NOM A:size=9
 
+!Scrollback
 URxvt*scrollTtyOutput: false
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true

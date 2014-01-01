@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+
+USER="mythmon"
+API_KEY="R_fc26397128fc0b52f405f92c7165c8f6"
+
+LONG=$(xclip -o)
+
+SHORT=$(curl -s "http://api.bitly.com/v3/shorten?login=${USER}&apiKey=${API_KEY}&longUrl=${LONG}&format=txt")
+
+echo -n $SHORT | xclip
+notify-send "Shortened URL is on the clipboard."

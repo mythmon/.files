@@ -6,10 +6,8 @@ if ( which qmv &> /dev/null ); then
     alias qmv='qmv -f do'
 fi
 
-# twistd -> serve (http server)
-if ( which twistd &> /dev/null ); then
-    alias serve='twistd -n web --path .'
-fi
+# Simple http server
+alias serve='python2 -m SimpleHTTPServer 8000'
 
 # herbstclient -> short command
 if ( which herbstclient &> /dev/null ); then
@@ -32,3 +30,16 @@ fi
 if ( which stackato &> /dev/null ); then
     alias kato='stackato'
 fi
+
+# Watch q output file -> Q
+alias Q='tail -F /tmp/q'
+
+function sudo() {
+    if [[ "$1" == "cd" ]]; then
+        shift
+        mkdir -p "$@"
+        cd "$@"
+    else
+        /usr/bin/sudo "$@"
+    fi
+}

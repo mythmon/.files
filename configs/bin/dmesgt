@@ -1,0 +1,5 @@
+#!/bin/bash
+TAIL_LINES=${1:-$(tput lines)}
+TAIL_LINES=$(( $TAIL_LINES - 7 ))
+
+watch -n 0.2 "dmesg | tail -n $TAIL_LINES"

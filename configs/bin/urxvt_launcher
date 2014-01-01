@@ -2,9 +2,17 @@
 
 echo "$@" >> /home/mythmon/.launcher.log
 
-if [[ $1 == 'subl://'* ]]; then
-    path=$(echo $1 | cut -c 8-)
+path=$1
+echo $path
+
+if [[ "$path" == 'subl://'* ]]; then
+    path=$(echo $path | cut -c 8-)
+    exec subl $path
+elif [[ "$path" =~ https?://www.youtube.com/watch\?v=.* ]]; then
+    exec yt "$path"
+elif [[ "$path" == 'file://'* ]]; then
+    path=$(echo $path | cut -c 8-)
     exec subl $path
 else
-    exec browser $1
+    exec browser $path
 fi
