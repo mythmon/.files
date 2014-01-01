@@ -41,7 +41,7 @@ ${color2}|${color0} \
 \
 ${color1}${font Pizzadude Bullets:size=8}8${font}${color0} \
 ${loadavg 2} \
-${loadgraph 12,40 4} \
+${loadgraph 12,40 6} \
 ${color2}|${color0} \
 \
 ${color1}${font Pizzadude Bullets:size=8}~${font}${color0} \

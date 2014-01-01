@@ -44,29 +44,13 @@ bindkey . rationalise-dot
 # something else when it's done. this should work with screen and
 # gnome-terminal2/multi-gnome-terminal
 
-case $TERM in
-    xterm*|screen*)
-        preexec () {
-            export CURRENTCMD="$1"
-            if [ x$WINDOW != x ]; then
-                print -Pn "\ek$1\e\\"
-            else
-                print -Pn "\e]0;$1\a"
-            fi
-        }
-        precmd () {
-            if [[ ! -z $CURRENTCMD ]]; then
-                if [ x$WINDOW != x ]; then
-                    print -Pn "\ek($CURRENTCMD)\e\\"
-                else
-                    print -Pn "\e]0;($CURRENTCMD)\a"
-                fi
-            fi
-        }
-    ;;
-esac
-
-PATH="$HOME/bin:$PATH:$HOME/.cabal/bin"
+preexec () {
+    export CURRENTCMD="$1"
+    settitle "$1"
+}
+precmd () {
+    settitle "($CURRENTCMD)"
+}
 
 export PATH="$HOME/bin:$PATH:$HOME/.gem/ruby/2.0.0/bin"
 export EDITOR="vim"

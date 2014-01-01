@@ -5,4 +5,4 @@ max_geometry 6x1
 icon_gravity NE
 dockapp_mode simple
 window_type dock
-kludges force_icons_size
+kludges force_icons_size,use_icons_hints
