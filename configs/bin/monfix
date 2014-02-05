@@ -5,6 +5,7 @@ lines = xrandr.split(/\n/)
 i = 0
 wait_for_mon = true
 always_mon = /LVDS-?\d/
+ignore_mon = /VIRTUAL\d/
 
 monitors = []
 
@@ -40,6 +41,10 @@ def index_regex(array, str)
     end
   }
 end
+
+monitors.select! { |mon|
+  not ignore_mon.match(mon['name'])
+}
 
 monitors.sort! { |a, b|
   index_regex(order, a['name']) <=> index_regex(order, b['name'])

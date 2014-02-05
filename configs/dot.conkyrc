@@ -49,13 +49,6 @@ ${mem} \
 ${memgraph 12,40} \
 ${color2}|${color0} \
 \
-${color1}${font PizzaDude Bullets:size=8}Z${font}${color0} \
-R:${diskio_read} \
-${diskiograph_read 12,40 00FF00 00FF00}\
-W:${diskio_write} \
-${diskiograph_write 12,40 FF0000 FF0000}\
-${color2}|${color0} \
-\
 ${battery}\
 \
 ${if_match "0" == "1"}\
@@ -76,6 +69,9 @@ ${color2}|${color0} \
 ${color1}${voffset -4}${font Heydings Icons:size=10}3${font}${color0} \
 ${wireless_essid wlp3s0} \
 ${addr wlp3s0} \
+${color2}|${color0} \
+\
+${execi 9 cat /home/mythmon/.background}\
 \
 ${alignr}\
 ${color1}${time %Y-%m-%d}${color0} \

@@ -21,3 +21,18 @@ ldap            90 days
 int             4 bytes
 float           4 bytes
 double          4 bytes
+
+hash            !
+hashes          hash
+
+BTC             !
+btc             BTC
+satoshi         1e-08 BTC
+
+DOGE            !
+doge            DOGE
+
+Olf             !
+olf             Olf
+
+shower          18 people

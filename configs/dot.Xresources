@@ -10,6 +10,8 @@ URxvt.visualBall: true
 URxvt.lineSpace: 1
 
 URxvt.perl-ext-common: default,url-select
+
+! launchers
 URxvt.url-select.launcher: urxvt_launcher
 URxvt.url-select.underline: true
 URxvt.url-select.button: 3
@@ -29,9 +31,9 @@ URxvt.tintColor: white
 ! Font
 Xft.dpi: 96
 Xft.antialias: true
-Xft.rgba: rgb
+Xft.rgba: rgba
 Xft.hinting: true
-Xft.hinstyle: hintsligh
+Xft.hinstyle: hintslight
 
 URxvt.font: xft:Dina:style=Regular:size=8,\
             xft:Ubuntu Mono:style=Regular:size=9, \

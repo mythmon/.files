@@ -36,10 +36,6 @@ hc keybind XF86AudioRaiseVolume spawn ${HOME}/bin/vol up
 hc keybind XF86AudioLowerVolume spawn ${HOME}/bin/vol down
 hc keybind XF86AudioMute spawn amixer ${HOME}/bin/vol toggle
 # Media bindings.
-hc keybind XF86AudioPlay spawn spotify-remote playpause
-hc keybind XF86AudioNext spawn spotify-remote next
-hc keybind XF86AudioPrev spawn spotify-remote prev
-hc keybind XF86AudioStop spawn spotify-remote stop
 
 # tags
 TAG_NAMES=( {1..9} 0 )

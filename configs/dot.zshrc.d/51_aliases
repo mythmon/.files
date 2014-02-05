@@ -28,7 +28,7 @@ fi
 
 # Stackato -> kato
 if ( which stackato &> /dev/null ); then
-    alias kato='stackato'
+    alias st='stackato'
 fi
 
 # Watch q output file -> Q
@@ -42,4 +42,14 @@ function sudo() {
     else
         /usr/bin/sudo "$@"
     fi
+}
+
+# Useful function for awking out columns.
+function col() {
+    colNum=${1:-1}
+    if [[ $colNum -lt 1 ]]; then
+        echo "Argument must be >0" >&2
+        return 1
+    fi
+    awk "{print \$${colNum}}"
 }
