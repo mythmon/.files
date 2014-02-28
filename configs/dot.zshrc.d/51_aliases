@@ -1,8 +1,11 @@
 # These aliases are generally in the form of if a given executable is on the
 # system, add an alias.
 
+alias g=git
+alias ll='ls -l'
+
 # qmv -> default options
-if ( which qmv &> /dev/null ); then
+if ( which qmv > /dev/null ); then
     alias qmv='qmv -f do'
 fi
 
@@ -10,24 +13,22 @@ fi
 alias serve='python2 -m SimpleHTTPServer 8000'
 
 # herbstclient -> short command
-if ( which herbstclient &> /dev/null ); then
-    function hc() {
-        herbstclient "$@"
-    }
+if ( which herbstclient > /dev/null ); then
+    alias hc=herbstclient
 fi
 
 # vim -> open in tabs by default
-if ( which vim &> /dev/null ); then
+if ( which vim > /dev/null ); then
     alias vim='vim -p'
 fi
 
 # (task) taskwarrior -> alias T
-if ( which task &> /dev/null ); then
+if ( which task > /dev/null ); then
     alias T='task'
 fi
 
 # Stackato -> kato
-if ( which stackato &> /dev/null ); then
+if ( which stackato > /dev/null ); then
     alias st='stackato'
 fi
 
@@ -53,3 +54,15 @@ function col() {
     fi
     awk "{print \$${colNum}}"
 }
+
+# journalctl helper.
+if ( which journalctl > /dev/null ); then
+    alias jlog='sudo journalctl -f -o cat -u'
+fi
+
+if ( which systemctl > /dev/null ); then
+    alias sstatus='sudo systemctl status'
+    alias sstart='sudo systemctl start'
+    alias sstop='sudo systemctl stop'
+    alias srestart='sudo systemctl restart'
+fi

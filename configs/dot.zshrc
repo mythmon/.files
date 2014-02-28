@@ -1,5 +1,5 @@
 HISTFILE=~/.zsh/history
-HISTSIZE=10000
+HISTSIZE=1000000
 SAVEHIST=1000000
 
 setopt autocd            # cd to directory without saying cd.
@@ -92,14 +92,14 @@ if [[ -d ~/.nvm ]]; then
     source ~/.nvm/nvm.sh
 fi
 
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 alias ls='ls --color=if-tty --group-directories-first -hF'
 alias rm='rm -r'
 alias cp='cp -r'
 
 fortune -ac
 echo
-
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Include various sub-.zshrc files
 # but don't include vim .swp files
