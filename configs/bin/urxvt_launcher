@@ -2,17 +2,34 @@
 
 echo "$@" >> /home/mythmon/.launcher.log
 
-path=$1
-echo $path
+path="$@"
+
+function hc() {
+    herbstclient "$@"
+}
+
+function www() {
+    # If tag 1 is not showing...
+    if hc tag_status | tr '\t' '\n' | grep -E '^[^#\-]' | grep 1; then
+        # show it.
+        herbstclient use_index 0
+    fi
+
+    exec browser "$@"
+}
 
 if [[ "$path" == 'subl://'* ]]; then
     path=$(echo $path | cut -c 8-)
     exec subl $path
-elif [[ "$path" =~ https?://www.youtube.com/watch\?v=.* ]]; then
-    exec yt "$path"
+# elif [[ "$path" =~ https?://www.youtube.com/watch\?v=.* ]]; then
+#     exec yt "$path"
 elif [[ "$path" == 'file://'* ]]; then
     path=$(echo $path | cut -c 8-)
     exec subl $path
+elif echo $path | grep -iE '(bug|bmo) #?[1234567890]+' > /dev/null 2>/dev/null; then
+    bug=$(echo $path | sed -E 's/.*([Bb][Uu][Gg]|[Bb][Mm][Oo]) #?([0-9]+).*/\2/')
+    path="https://bugzilla.mozilla.org/show_bug.cgi?id=$bug"
+    www $path
 else
-    exec browser $path
+    www $path
 fi

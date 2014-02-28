@@ -18,6 +18,7 @@ URxvt.url-select.button: 3
 URxvt.matcher.pattern.1: \\b(https?:\/\/[^ ]+)\\b
 URxvt.matcher.pattern.2: \\b(subl:\/\/[^ ]+)\\b
 URxvt.matcher.pattern.3: \\b(file:\/\/\/[^ ]+)\\b
+URxvt.matcher.pattern.4: (([Bb][Uu][Gg])|([Bb][Mm][Oo]) #?[0-9]+)[^0-9]
 
 URxvt.iso14755_52: false
 URxvt.iso14755: false
