@@ -9,7 +9,7 @@ URxvt.saveLines: 65535
 URxvt.visualBall: true
 URxvt.lineSpace: 1
 
-URxvt.perl-ext-common: default,url-select
+URxvt.perl-ext-common: default,url-select,font-size
 
 ! launchers
 URxvt.url-select.launcher: urxvt_launcher
@@ -45,6 +45,10 @@ URxvt*scrollTtyOutput: false
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
 URxvt*saveLines: 1000000
+
+! Bindings
+URxvt.keysym.C-Up: perl:font-size:increase
+URxvt.keysym.C-Down: perl:font-size:decrease
 
 !Color scheme:
 URxvt*background: #2B2B2B
