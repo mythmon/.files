@@ -47,12 +47,8 @@ function sudo() {
 
 # Useful function for awking out columns.
 function col() {
-    colNum=${1:-1}
-    if [[ $colNum -lt 1 ]]; then
-        echo "Argument must be >0" >&2
-        return 1
-    fi
-    awk "{print \$${colNum}}"
+    colNums="\$$(echo "$@" | sed -e 's/ /,$/')"
+    awk "{print ${colNums}}"
 }
 
 # journalctl helper.

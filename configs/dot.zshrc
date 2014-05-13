@@ -68,10 +68,6 @@ compinit
 # Make "words" delimited by more things (ie: path pieces instead of full paths)
 WORDCHARS=${WORDCHARS//[&=\/;!#%\{]}
 
-# Bindings
-bindkey -v # vi mode
-bindkey -M vicmd '/' history-incremental-search-backward
-
 rationalise-dot() {
     if [[ $LBUFFER = *.. ]]; then
         LBUFFER+=/../

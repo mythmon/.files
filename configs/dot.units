@@ -16,7 +16,9 @@ cookie          !
 cps             cookie / second
 click           !
 
-ldap            90 days
+old_ldap        90 days
+ldap            180 days
+new_ldap        ldap
 
 int             4 bytes
 float           4 bytes
@@ -32,7 +34,10 @@ satoshi         1e-08 BTC
 DOGE            !
 doge            DOGE
 
-Olf             !
+Olf             !       # Base unit of stench
 olf             Olf
 
 shower          18 people
+
+widget          !       # Base unit of things
+w               widget
