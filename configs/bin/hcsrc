@@ -1,5 +1,7 @@
 #!/bin/bash
 
+direction=${1:-horizontal}
+
 function hc() {
     herbstclient "$@"
 }
@@ -10,9 +12,20 @@ spawn_with_rules() {(
     ) &
 }
 
-LAYOUT="(split horizontal:0.76:0 (clients max:0) (split vertical:0.9:0 (clients vertical:0) (clients vertical:0)))"
+case $direction in
+    "horizontal")
+        LAYOUT="(split horizontal:0.76:0 (clients max:0) (split vertical:0.9:0 (clients vertical:0) (clients vertical:0)))"
+        ;;
+    "vertical")
+        LAYOUT="(split vertical:0.65:0 (clients vertical:0) (clients grid:0))"
+        ;;
+    *)
+        echo "Unknown direction $direction"
+        exit 1
+        ;;
+esac
 
-PROJECT=$(ls ${HOME}/src | dmenu -p "Project: ")
+PROJECT=$(ls ${HOME}/src | dmenu -p "Project ($direction): ")
 [[ -z $PROJECT ]] && echo "No project" && exit 1
 DIR="${HOME}/src/${PROJECT}"
 [[ ! -d $DIR ]] && echo "Project '$PROJECT' not found." && exit 2
@@ -25,16 +38,28 @@ renametag "$PROJECT"
 cd "$DIR"
 
 RULES=( index=0 focus=on )
-SUBL_PROJ="${HOME}/.config/sublime-text-3/Projects/${PROJECT}.sublime-project"
-if [ -e $SUBL_PROJ ]; then
-    spawn_with_rules subl --project $SUBL_PROJ
-else
-    spawn_with_rules subl "$DIR"
-fi
+spawn_with_rules atom "$DIR"
 
-RULES=( index=10 focus=off )
-spawn_with_rules urxvt
-spawn_with_rules urxvt
+#SUBL_PROJ="${HOME}/.config/sublime-text-3/Projects/${PROJECT}.sublime-project"
+#if [ -e $SUBL_PROJ ]; then
+#    spawn_with_rules subl --project $SUBL_PROJ
+#else
+#    spawn_with_rules subl "$DIR"
+#fi
 
-RULES=( index=11 focus=off )
-spawn_with_rules urxvt
+case $direction in
+    "horizontal")
+        RULES=( index=10 focus=off )
+        spawn_with_rules urxvt
+        spawn_with_rules urxvt
+        RULES=( index=11 focus=off )
+        spawn_with_rules urxvt
+        ;;
+    "vertical")
+        RULES=( index=1 focus=off )
+        spawn_with_rules urxvt
+        spawn_with_rules urxvt
+        spawn_with_rules urxvt
+        spawn_with_rules urxvt
+        ;;
+esac
