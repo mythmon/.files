@@ -22,7 +22,7 @@ new_ldap        ldap
 
 int             4 bytes
 float           4 bytes
-double          4 bytes
+double          8 bytes
 
 hash            !
 hashes          hash
@@ -41,3 +41,8 @@ shower          18 people
 
 widget          !       # Base unit of things
 w               widget
+
+copper_coin     !
+silver_coin     100 copper_coin
+gold_coin       100 silver_coin
+platinum_coin   100 gold_coin
