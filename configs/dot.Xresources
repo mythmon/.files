@@ -36,9 +36,7 @@ Xft.rgba: rgba
 Xft.hinting: true
 Xft.hinstyle: hintslight
 
-URxvt.font: xft:Dina:style=Regular:size=8,\
-            xft:Ubuntu Mono:style=Regular:size=9, \
-            xft:HAN NOM A:size=9
+URxvt.font: xft:Fira Mono:style=Regular
 
 !Scrollback
 URxvt*scrollTtyOutput: false
@@ -53,9 +51,7 @@ URxvt.keysym.C-Down: perl:font-size:decrease
 !Color scheme:
 URxvt*background: #2B2B2B
 URxvt*foreground: #DEDEDE
-
 URxvt*colorUL: #86a2b0
-
 ! black
 URxvt*color0  : #2E3436
 URxvt*color8  : #555753
