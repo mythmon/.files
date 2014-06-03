@@ -1,0 +1,32 @@
+[user]
+  name = Mike Cooper
+  email = mythmon@gmail.com
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore_global
+[color]
+	ui = true
+[apply]
+	whitespace = fix
+[rerere]
+	enabled = 1
+[gist]
+	browse = no
+[alias]
+	sub = !sh -c 'git submodule sync >/dev/null && git submodule update --init --recursive'
+    branchls = !git-branchls
+    bug = !sh -c 'github-bugzilla-url'
+    head = rev-parse HEAD
+    net = log --graph --all --decorate
+    up = !sh -c 'git pull upstream master && git push origin master'
+    worddiff = diff --color-words --word-diff-regex='[A-z0-9_\\-]+|[^[:space:]]'
+[merge]
+	conflictstyle = diff3
+[push]
+	default = simple
+[rebase]
+	autosquash = yes
+[credential]
+	helper = /usr/share/git/credential/gnome-keyring/git-credential-gnome-keyring
+[hub]
+	protocol = https

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd $HOME/src/color
+source bin/activate
+./color.hy

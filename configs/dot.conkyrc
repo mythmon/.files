@@ -1,22 +1,23 @@
 border_inner_margin 0
 cpu_avg_samples 3
 default_color white
-default_outline_color white
-default_shade_color white
+default_outline_color black
+default_shade_color black
 double_buffer 1
 draw_graph_borders no
-draw_outline no
+draw_outline yes
 draw_shades no
 use_xft yes
-xftfont Dina:size=8
-gap_x 250
-gap_y 1
-maximum_width 854
-minimum_size 854 0
+xftfont Fira Mono:size=12
+gap_x 322
+gap_y 1421
+maximum_width 2136
+minimum_size 2136 0
 net_avg_samples 2
 no_buffers yes
 own_window yes
-own_window_colour 101010
+own_window_colour 224488
+own_window_transparent no
 own_window_hints undecorated,sticky,skip_taskbar,skip_pager
 own_window_type dock
 pad_percents 2
@@ -24,6 +25,7 @@ short_units yes
 update_interval 1.0
 update_interval_on_battery 10.0
 use_spacer left
+if_up_strictness link
 
 #lua_load /home/mythmon/.conky.d/learn.lua
 #lua_draw_hook_post main
@@ -33,30 +35,56 @@ color1 888888
 color2 268bd2
 
 TEXT
-${color1}${font PizzaDude Bullets:size=8}Y${font}${color0} \
+${goto 300}\
+${voffset -4}\
+${color1}${font PizzaDude Bullets:size=10}Y${font}${color0} \
+${voffset -2}\
 ${cpu}% \
 ${freq_g}GHz \
 ${color2}|${color0} \
 \
-${color1}${font Pizzadude Bullets:size=8}8${font}${color0} \
-${loadavg 2} \
+${voffset -1}\
+${color1}${font Pizzadude Bullets:size=10}8${font}${color0} \
+${voffset -2}\
+${loadavg} \
 ${color2}|${color0} \
 \
-${color1}${font Pizzadude Bullets:size=8}~${font}${color0} \
-${mem} \
+${voffset -2}\
+${color1}${font Pizzadude Bullets:size=10}~${font}${color0} \
+${voffset -2}\
+${mem}B \
 ${color2}|${color0} \
 \
-${font Heydings Icons:size=8}r${font}\
-${color0} \
-${smapi_bat_perc 0}% \
+${if_match ${battery_percent BAT0} < 5}\
+${if_updatenr 1}${color red}${endif}\
+${if_updatenr 2}${color0}${endif}\
+${endif}\
+\
+${voffset 1}\
+${font Heydings Icons:size=10}r${font} \
+${voffset -2}\
+${battery_short BAT0} ${battery_time} \
+\
 ${color2}|${color0} \
 \
-${color1}${voffset -4}${font Heydings Icons:size=10}3${font}${color0} \
+${voffset -2}\
+${color1}${font Heydings Icons:size=10}3${font}${color0} \
+${voffset -2}\
+${if_up enp0s25}\
+${addr enp0s25}\
+${endif}\
+\
+${if_up enp0s25}${if_up wlp3s0}\
+ / \
+${endif}${endif}\
+\
+${if_up wlp3s0}\
 ${wireless_essid wlp3s0} \
-${addr wlp3s0} \
-${color2}|${color0} \
+${addr wlp3s0}\
+${endif}\
+${color2} |${color0} \
 \
-${execi 9 cat /home/mythmon/.background}\
+${head /home/mythmon/.background 1} \
 \
 ${alignr}\
 ${color1}${time %Y-%m-%d}${color0} \

@@ -4,9 +4,9 @@
 monitor=${1:-0}
 
 ########## OPTIONS ##########
-panel_height=16
-font="Dina:size=8"
-bgcolor="#101010"
+panel_height=20
+font="Fira Mono:size=12"
+bgcolor="#224488"
 selbg=$(herbstclient get window_border_active_color)
 selfg='#101010'
 sep="^bg()^fg($selbg)|"
@@ -21,9 +21,10 @@ if [ -z "$geometry" ] ;then
 fi
 # geometry has the format: WxH+X+Y
 x=${geometry[0]}
-y=${geometry[1]}
+#y=${geometry[1]}
+y=$(( ${geometry[3]} - $panel_height ))
 if [[ 0 -eq $monitor ]]; then
-    panel_width=250
+    panel_width=322
 else
     panel_width=${geometry[2]}
 fi
@@ -53,7 +54,7 @@ function uniq_linebuffered() {
 }
 
 ########## Go! ##########
-herbstclient pad $monitor $panel_height
+herbstclient pad $monitor 5 5 $(( 5 + $panel_height )) 5
 
 {
     # hlwm events
@@ -115,10 +116,7 @@ herbstclient pad $monitor $panel_height
                 #echo "reseting tags" >&2
                 TAGS=( $(herbstclient tag_status $monitor) )
                 ;;
-            quit_panel)
-                exit
-                ;;
-            reload)
+            quit_panel|reload)
                 exit
                 ;;
             focus_changed|window_title_changed)

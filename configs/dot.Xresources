@@ -1,5 +1,3 @@
-URxvt.background: black
-URxvt.foreground: grey
 URxvt.scrollBar: false
 URxvt.cursorBlink: true
 URxvt.imLocale: en_US.utf8
@@ -18,7 +16,7 @@ URxvt.url-select.button: 3
 URxvt.matcher.pattern.1: \\b(https?:\/\/[^ ]+)\\b
 URxvt.matcher.pattern.2: \\b(subl:\/\/[^ ]+)\\b
 URxvt.matcher.pattern.3: \\b(file:\/\/\/[^ ]+)\\b
-URxvt.matcher.pattern.4: \\b(([Bb][Uu][Gg])|([Bb][Mm][Oo]) #?[0-9]+)\\b
+URxvt.matcher.pattern.4: \\b(([Bb][Uu][Gg]) #?[0-9]+)\\b
 
 URxvt.iso14755_52: false
 URxvt.iso14755: false
@@ -49,7 +47,7 @@ URxvt.keysym.C-Up: perl:font-size:increase
 URxvt.keysym.C-Down: perl:font-size:decrease
 
 !Color scheme:
-URxvt*background: #2B2B2B
+URxvt*background: #000000
 URxvt*foreground: #DEDEDE
 URxvt*colorUL: #86a2b0
 ! black

@@ -1,0 +1,3 @@
+export ATOM_REPOS_HOME=~/src/atom.d
+
+# vim: filetype=zsh

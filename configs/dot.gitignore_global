@@ -1,0 +1,8 @@
+*.swp
+*.swo
+*.pyc
+.venv
+.noseids
+*.sublime-project
+*.sublime-workspace
+_trial_temp

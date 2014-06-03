@@ -1,19 +1,2 @@
 #!/bin/bash
-
-if [[ -f .venv ]]; then
-    echo "There is already a .venv file here, not overwriting."
-    exit 1
-fi
-
-virtualenv2 --distribute .
-
-echo '#!/bin/bash
-DIR=$(dirname $0)
-source $DIR/bin/activate
-v_activate() {
-}
-v_deactivate() {
-    deactivate
-}' > .venv
-
-echo "Made .venv for automatic activation."
+exec ~/src/venver/node_modules/.bin/coffee ~/src/venver/index.coffee "$@"

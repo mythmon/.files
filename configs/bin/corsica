@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+set -u
+
+clipboard=$(xclip -o)
+clipboard=${clipboard:-""}
+
+autocomplete="${clipboard} screen=
+reset screen=
+admin type=reload screen="
+
+screens="ambient3\nambient4\nambient"
+
+command=$(echo -e "${autocomplete}" | dmenu -p "Command: ")
+if [[ $command =~ screen=$ ]]; then
+    screen=$(echo -e $screens | dmenu -p "Screen: ")
+    command="$command$screen"
+fi
+
+curl -X POST http://airmozilla-ops2.corpdmz.scl3.mozilla.com/api/command \
+    -H "Content-Type: application/json" \
+    -d "{\"raw\": \"${command}\"}"
