@@ -1,0 +1,106 @@
+#!/usr/bin/env node
+
+var net = require('net');
+var EventEmitter = require('events').EventEmitter;
+var childProcess = require('child_process');
+
+var acpi = new EventEmitter();
+var buffer = new Buffer([])
+
+var client = net.connect({path: '/var/run/acpid.socket'}, function() {
+  console.log('connected');
+});
+
+client.on('data', function(data) {
+  buffer = Buffer.concat([buffer, data]);
+  var str = buffer.toString();
+  if (str.indexOf('\n') > -1) {
+    var parts = str.split('\n');
+    var lines = parts.slice(0, -1);
+    buffer = new Buffer(parts[parts.length - 1]);
+    lines.forEach(function(line) {
+      var parts = line.split(' ');
+      var eventName = parts[0];
+      var type = parts[1];
+      var data = parts.slice(2).join(' ');
+
+      acpi.emit(eventName, type, data);
+      acpi.emit('any', eventName, type, data);
+    });
+  }
+});
+
+client.on('end', function() {
+  console.log('disconnected');
+});
+
+var audioSinks = {
+  internal: 'alsa_output.pci-0000_00_1b.0.analog-stereo',
+  hdmi: 'alsa_output.pci-0000_00_03.0.hdmi-stereo-extra1',
+  dock: 'alsa_output.usb-C-Media_Electronics_Inc._ThinkPad_OneLink_Pro_Dock_Audio-00-Audio.analog-stereo',
+};
+
+var states = ['DOCKED', 'TRANSITION', 'UNDOCKED', 'UNKNOWN'];
+var currentState = 'UNKNOWN';
+var transitions = {
+  "DOCKED": {
+    6030: ["TRANSITION", []]
+  },
+  "TRANSITION" : {
+    4011: ["UNDOCKED", [
+        monitors('laptop'),
+        defaultSink(audioSinks.internal),
+    ]],
+    6030: ["DOCKED", [
+        monitors('work'),
+        defaultSink(audioSinks.dock),
+    ]],
+  },
+  "UNDOCKED": {
+    4010: ["TRANSITION", []]
+  },
+  "UNKNOWN": {
+    6030: ["TRANSITION", []],
+    4010: ["TRANSITION", []],
+  }
+};
+
+function log(/* args... */) {
+    var args = Array.prototype.slice.call(arguments);
+    console.log.bind(console, new Date().toISOString())(args);
+}
+
+acpi.on('ibm/hotkey', function(type, data) {
+  if (type === 'LEN0068:00') {
+    var code = parseInt(data.split(' ')[1], 10);
+    var stateChange = transitions[currentState][code];
+
+    if (stateChange === undefined) {
+      log("unexpected code ", code, "while in state", currentState);
+      return;
+    }
+
+    log(currentState, '--', code, '->', stateChange[0]);
+
+    currentState = stateChange[0];
+    stateChange[1].forEach(function(output) {
+      output();
+    });
+  }
+});
+
+function monitors(mode) {
+  return function() {
+    childProcess.exec('monitors ' + mode);
+  };
+}
+
+function defaultSink(sinkName) {
+  return function() {
+    console.log('queueing default sink change');
+    setTimeout(function() {
+      console.log('changing sink');
+      childProcess.exec('pactl set-default-sink ' + sinkName);
+    }, 15 * 1000);
+  };
+};
