@@ -2,22 +2,15 @@
 
 case $1 in
 toggle)
-    amixer -c 1 set Master,0 toggle
-    STATE=$(amixer get Master,0 | sed -n '/^\s*Mono:/ s/.*\[\(off\|on\)\].*/\1/p')
-    if [[ $STATE == "off" ]]; then
-        amixer -c 1 set Headphone,0 mute
-        amixer -c 1 set Speaker,0 mute
-    else
-        amixer -c 1 set Headphone,0 unmute
-        amixer -c 1 set Speaker,0 unmute
-    fi
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
     ;;
 up)
-    amixer -c 1 set Master,0 5%+
-    amixer -c 1 set Master,0 unmute
+    # unmute
+    pactl set-sink-mute @DEFAULT_SINK@ 0
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
     ;;
 down)
-    amixer -c 1 set Master,0 5%-
+    pactl set-sink-volume @DEFAULT_SINK@ -- -5%
     ;;
 *)
     echo "Usage: $0 [toggle|up|down]"

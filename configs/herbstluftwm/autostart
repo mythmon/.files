@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# this is a simple config for herbstluftwm
-
 function hc() {
     herbstclient "$@"
 }
@@ -9,6 +7,29 @@ function hc() {
 # Get location of autostart file
 BASE="$(dirname $0)"
 
+# Theme
+hc lock
+
+# Wallpapers!
+xsetroot -solid \#248
+# colors
+color_active='#268bd2'
+color_inactive='#93a1a1'
+hc set frame_border_active_color '#222222'
+hc set frame_border_normal_color '#101010'
+hc set frame_bg_normal_color '#565656'
+hc set frame_bg_active_color '#345F0C'
+hc set frame_border_width 1
+hc set window_border_width 2
+hc set window_border_normal_color '#454545'
+hc set window_border_active_color '#268bd2'
+hc set always_show_frame 1
+hc set frame_gap 3
+hc set frame_bg_transparent 1
+
+hc unlock
+
+# Other setup.
 hc lock
 hc emit_hook reload
 
@@ -35,7 +56,11 @@ hc keybind $Mod-Alt-l spawn ${HOME}/bin/vol toggle
 hc keybind XF86AudioRaiseVolume spawn ${HOME}/bin/vol up
 hc keybind XF86AudioLowerVolume spawn ${HOME}/bin/vol down
 hc keybind XF86AudioMute spawn amixer ${HOME}/bin/vol toggle
-# Media bindings.
+# Media keys (with rdiod)
+hc keybind XF86AudioPlay spawn curl -XPOST localhost:8572/api/player/togglePause
+# Brightness bindings.
+hc keybind XF86MonBrightnessDown spawn xbacklight -dec 10
+hc keybind XF86MonBrightnessUp spawn xbacklight -inc 10
 
 # tags
 TAG_NAMES=( {1..9} 0 )
@@ -96,28 +121,13 @@ hc keybind $Mod-Shift-k shift up
 hc keybind $Mod-Shift-l shift right
 hc set focus_follows_mouse 0
 
-# colors
-color_active='#268bd2'
-color_inactive='#93a1a1'
-hc set frame_border_active_color '#222222'
-hc set frame_border_normal_color '#101010'
-hc set frame_bg_normal_color '#565656'
-hc set frame_bg_active_color '#345F0C'
-hc set frame_border_width 1
-hc set window_border_width 2
-hc set window_border_normal_color '#454545'
-hc set window_border_active_color '#268bd2'
-hc set always_show_frame 1
-hc set frame_gap 3
-hc set frame_bg_transparent 1
-
 # rules
 hc unrule -F
 hc rule focus=on # Normally focus new windows.
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
-# Move all spotifys to tag 0
-hc rule class=Spotify tag=0
+hc rule class="B2g" pseudotile=on
+hc rule class="crashreporter" pseudotile=on
 
 # Set up multi monitors
 hc detect_monitors
@@ -129,9 +139,6 @@ pkill panel.sh
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
     $panel $monitor &
 done
-
-# Wallpapers!
-xsetroot -solid \#111111
 
 function ensure() {
     pgrep $1 || $1 &

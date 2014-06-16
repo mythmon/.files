@@ -1,10 +1,12 @@
 autoload promptinit
 promptinit
+setopt prompt_subst
 
 # Show time for long running processes.
 REPORTTIME=2
 
-setopt prompt_subst
+host_color=$(hash_color $(hostname))
+#host_color=$(hash_color radium)
 
 autoload -Uz vcs_info
 if vcs_info 2> /dev/null; then
@@ -27,15 +29,25 @@ preexec_prompt () {
 # Called right before drawing a prompt.
 precmd_prompt () {
     lastexit=$?
-    pspath="%F{green}%~%f"
-    pshost="%F{$(hash_color $(hostname))}%m%f"
-    psuser="%n"
+    pscwd=$(pwd | sed -e "s|$HOME|~|")
+    pspath="%F{green}${pscwd}%f"
+    tri=''
 
     if [[ $lastexit -eq 0 ]]; then
-        psat="%F{2}@%f"
+        ret_color=29
     else
-        psat="%F{9}$lastexit@%f"
+        ret_color=160
     fi
+    if [[ -n $AUTO_VENV_LAST_DIR ]]; then
+        venv_color=255
+        venv_name=$(basename $AUTO_VENV_LAST_DIR)
+    else
+        venv_color=232
+    fi
+
+    psvenv="%F{$venv_color}%K{${ret_color}}${tri}"
+    psret="%F{${ret_color}}%K{${host_color}}${tri}%f%k"
+    psglyph="%F{${host_color}}${tri}%f%k"
 
     vcs_info
     if [[ -n $vcs_info_msg_0_ ]] ; then
@@ -54,10 +66,17 @@ precmd_prompt () {
     else
         psvcs=""
     fi
+
+    if [[ -n $venv_name ]]; then
+        PS1=$(echo $PS1 | sed -e "s/($venv_name)//")
+        pspath=$(echo $pspath | sed -e "s|$venv_name|[$venv_name]|")
+        psvcs=$(echo $psvcs | sed -e "s|$venv_name|[$venv_name]|")
+    fi
 }
 
 add-zsh-hook preexec preexec_prompt
 add-zsh-hook precmd precmd_prompt
 
-PROMPT='${psat}${pshost}> '
+# ►
+PROMPT='${psvenv}${psret}${psglyph} '
 RPROMPT='${pspath}${psvcs}'

@@ -11,6 +11,7 @@ use_xft yes
 xftfont Fira Mono:size=12
 gap_x 322
 gap_y 1421
+#gap_y 2621
 maximum_width 2136
 minimum_size 2136 0
 net_avg_samples 2
@@ -18,7 +19,8 @@ no_buffers yes
 own_window yes
 own_window_colour 224488
 own_window_transparent no
-own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+#own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+own_window_hints sticky
 own_window_type dock
 pad_percents 2
 short_units yes

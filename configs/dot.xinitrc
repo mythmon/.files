@@ -27,7 +27,7 @@ export GTK_IM_MODULE="xim"
 # Some Daemons
 pulseaudio &
 urxvtd &
-source <(gnome-keyring-daemon)
+#source <(gnome-keyring-daemon)
 
 export SSH_AUTH_SOCK
 export GPG_AGENT_INFO

@@ -34,7 +34,8 @@ Xft.rgba: rgba
 Xft.hinting: true
 Xft.hinstyle: hintslight
 
-URxvt.font: xft:Fira Mono:style=Regular
+!URxvt.font: xft:Fira Mono:style=Regular
+URxvt.font: xft:Source Code Pro for Powerline:style=regular
 
 !Scrollback
 URxvt*scrollTtyOutput: false

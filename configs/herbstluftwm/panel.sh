@@ -22,7 +22,7 @@ fi
 # geometry has the format: WxH+X+Y
 x=${geometry[0]}
 #y=${geometry[1]}
-y=$(( ${geometry[3]} - $panel_height ))
+y=$(( ${geometry[1]} + ${geometry[3]} - $panel_height ))
 if [[ 0 -eq $monitor ]]; then
     panel_width=322
 else

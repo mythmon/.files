@@ -23,18 +23,18 @@ function hc() {
         mode=$(echo -e "laptop\nwork\nhome" | dmenu -p "Monitor layout: ")
     fi
 
-    for output in LVDS-0 VGA-0 DP-2; do
+    for output in DP1 HDMI1 DP2 HDMI2; do
         xrandr --output $output --off
     done
 
     case $mode in
         work)
-            xrandr --output eDPI1 --mode 2560x1440 --pos x1920
-            xrandr --output HDMI2 --mode 1920x1200 --rotate left --pos 80x0
-            xrandr --output DP1 --mode 1920x1200 --rotate left --pos 1280x0
-            hc set_monitors 2560x1440+0+1920 1200x1920+80+0 1200x1920+1280+0
+            xrandr --output eDPI1 --mode 2560x1440 --pos 0x0
+            xrandr --output DP2 --mode 1920x1200 --pos 2560x0
+            hc set_monitors 2560x1440+0+0 1920x1200+2560+0
             hc emit_hook quit_panel
             ~/.config/herbstluftwm/panel.sh 0 &
+            ~/.config/herbstluftwm/panel.sh 1 &
             ;;
         laptop)
             xrandr --output eDPI1 --mode 2560x1440 --pos 0x0

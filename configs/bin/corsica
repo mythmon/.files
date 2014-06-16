@@ -10,7 +10,7 @@ autocomplete="${clipboard} screen=
 reset screen=
 admin type=reload screen="
 
-screens="ambient3\nambient4\nambient"
+screens="ambient3\nambient4\nambient5\nambient6"
 
 command=$(echo -e "${autocomplete}" | dmenu -p "Command: ")
 if [[ $command =~ screen=$ ]]; then

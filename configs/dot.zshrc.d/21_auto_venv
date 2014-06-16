@@ -8,6 +8,8 @@ chpwd_auto_venv () {
         if [[ -f $dir/.venv ]]; then
             if [[ $dir = $AUTO_VENV_LAST_DIR ]]; then
                 return 0
+            elif [[ -n $AUTO_VENV_LAST_DIR ]]; then
+                v_deactivate
             fi
             source $dir/.venv
             v_activate
