@@ -56,15 +56,17 @@ def install_file(source, dest):
             raise
 
     if os.path.exists(dest):
-        if os.path.samefile(source, dest):
+        if CONFIG.force:
+            os.unlink(dest)
+        elif os.path.samefile(source, dest):
             return True
         else:
             logging.warning('Not replacing existing file {} with {}.'.format(dest, source))
             return False
-    else:
-        logging.info('Linking {} to {}'.format(source, dest))
-        if not CONFIG.noop:
-            os.link(source, dest)
+
+    logging.info('Linking {} to {}'.format(source, dest))
+    if not CONFIG.noop:
+        os.link(source, dest)
 
 
 class ChangeDir(object):
@@ -92,6 +94,7 @@ def loadConfig():
     parser.add_argument('-n', '--noop', action='store_true')
     parser.add_argument('-v', '--verbose', action='append_const', const=1)
     parser.add_argument('-q', '--quiet', action='append_const', dest='verbose', const=-1)
+    parser.add_argument('-f', '--force', action='store_true')
 
     opt = parser.parse_args()
 
@@ -132,5 +135,5 @@ def main():
                     logging.error('File "{}" does not match any rules.'.format(f))
 
 if __name__ == '__main__':
-    os.chdir(os.path.dirname(os.path.dirname(__file__)))
+    os.chdir(os.path.dirname(__file__))
     main()
