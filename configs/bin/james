@@ -1,0 +1,3 @@
+#!/bin/bash
+source ~/src/chief-james/bin/activate
+~/src/chief-james/james.py "$@"

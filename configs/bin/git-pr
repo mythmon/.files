@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function remote_by_name() {
+    name=$1
+
+    remote_line=$(git remote -v | grep push | grep $name)
+
+    if [[ -z $remote_line ]]; then
+        echo "Error: remote '$name' not found."
+        exit 1
+    fi
+
+    if [[ ! $(echo $remote_line | grep github) ]]; then
+        echo "Error: $name is not on github!"
+        exit 1
+    fi
+
+    repo=$(echo $remote_line |
+           sed 's/.*github.com[:\/]\([^ ]*\) .*/\1/' |
+           sed 's/\.git//')
+
+    echo $repo
+}
+
+origin=$(remote_by_name origin)
+branch=$(git branch | grep '^*' | awk '{print $2}')
+
+git push origin $branch:$branch
+
+xdg-open "https://github.com/$origin/pull/new/$branch" > /dev/null

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+
+function yn() {
+    echo -ne "$1 "
+    while true; do
+        read yn
+        case $yn in
+            [Yy]* ) return 0; break;;
+            [Nn]* ) return 1; break;;
+            * ) echo "Please enter 'y' or 'n'."; break;;
+        esac
+    done
+}
+
+git fetch upstream
+git rebase -i upstream/master
+
+echo "Changes to push:"
+git log --oneline upstream/master..HEAD
+
+if yn "Push to upstream?"; then
+    git push upstream HEAD:master
+fi
+
+branch=$(git branch --list | grep -E "^\*" | awk '{print $2}')
+
+if ( [[ $branch != 'master' ]] && yn "Clean up?" ); then
+    git checkout master
+    git reset --hard upstream/master
+    git branch -D $branch
+fi

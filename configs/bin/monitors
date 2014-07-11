@@ -15,7 +15,6 @@ function hc() {
     herbstclient "$@"
 }
 
-
 {
     mode=$1
 
@@ -43,9 +42,9 @@ function hc() {
             ~/.config/herbstluftwm/panel.sh 0 &
             ;;
         home)
-            xrandr --output eDPI1 --mode 2560x1440 --pos 0x0
-            xrandr --output HDMI2 --mode 1920x1080 --pos 2560x0
-            herbstclient set_monitors 2560x1440+0+0 1920x1080+2560+0
+            xrandr --output HDMI2 --mode 1920x1080 --pos 0x0
+            xrandr --output eDPI1 --mode 2560x1440 --pos 1920x0
+            herbstclient set_monitors 1920x1080+0+0 2560x1440+1920+0
             hc emit_hook quit_panel
             ~/.config/herbstluftwm/panel.sh 0 &
             ~/.config/herbstluftwm/panel.sh 1 &

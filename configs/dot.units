@@ -43,6 +43,11 @@ widget          !       # Base unit of things
 w               widget
 
 copper_coin     !
-silver_coin     100 copper_coin
-gold_coin       100 silver_coin
-platinum_coin   100 gold_coin
+silver_coin     10 copper_coin
+gold_coin       10 silver_coin
+platinum_coin   10 gold_coin
+
+# What-If numbers
+human_leg       22.1 kg
+tesla_car       326 waterdensity gallon
+bill_nye        1.85 m

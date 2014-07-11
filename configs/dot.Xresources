@@ -16,7 +16,7 @@ URxvt.url-select.button: 3
 URxvt.matcher.pattern.1: \\b(https?:\/\/[^ ]+)\\b
 URxvt.matcher.pattern.2: \\b(subl:\/\/[^ ]+)\\b
 URxvt.matcher.pattern.3: \\b(file:\/\/\/[^ ]+)\\b
-URxvt.matcher.pattern.4: \\b(([Bb][Uu][Gg]) #?[0-9]+)\\b
+URxvt.matcher.pattern.4: \\b(([Bb][Uu][Gg]) ?#?[0-9]+)\\b
 
 URxvt.iso14755_52: false
 URxvt.iso14755: false
@@ -35,7 +35,8 @@ Xft.hinting: true
 Xft.hinstyle: hintslight
 
 !URxvt.font: xft:Fira Mono:style=Regular
-URxvt.font: xft:Source Code Pro for Powerline:style=regular
+URxvt.font: xft:Source Code Pro for Powerline:style=regular, \
+            xft:Ubuntu Mono:style=Regular
 
 !Scrollback
 URxvt*scrollTtyOutput: false

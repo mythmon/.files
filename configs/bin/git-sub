@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function reLine() {
+    # \r = to beginning of line.
+    # \033 = escape sequence.
+    # [2K = erase entire line.
+    echo -ne "\r\033[2K$@"
+}
+
+git submodule sync | while read line; do
+    reLine $line
+done
+
+reLine "submodule sync done\n"
+
+git submodule update

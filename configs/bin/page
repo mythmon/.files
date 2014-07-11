@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd ~/src/page
+source bin/activate
+export PYTHONPATH=.
+python page/client.py

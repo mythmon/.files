@@ -14,8 +14,6 @@
 	browse = no
 [alias]
 	sub = !sh -c 'git submodule sync >/dev/null && git submodule update --init --recursive'
-    branchls = !git-branchls
-    bug = !sh -c 'github-bugzilla-url'
     head = rev-parse HEAD
     net = log --graph --all --decorate
     up = !sh -c 'git pull upstream master && git push origin master'

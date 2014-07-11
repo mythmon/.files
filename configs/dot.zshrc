@@ -84,18 +84,14 @@ export PATH="$HOME/bin:$PATH:$HOME/.gem/ruby/2.0.0/bin:$HOME/node_modules/.bin"
 export CDPATH="$HOME"
 export EDITOR="vim"
 
-if [[ -d ~/.nvm ]]; then
-    source ~/.nvm/nvm.sh
-fi
-
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias ls='ls --color=if-tty --group-directories-first -hF'
 alias rm='rm -r'
 alias cp='cp -r'
 
-fortune -ac
-echo
+#fortune -ac
+task fortune
 
 # Include various sub-.zshrc files
 # but don't include vim .swp files
