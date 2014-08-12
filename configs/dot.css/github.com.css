@@ -1,0 +1,10 @@
+.file .meta {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+div.branch-status.status-failure {
+  background: rgb(189, 44, 0);
+  color: white;
+}

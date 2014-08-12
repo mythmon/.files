@@ -3,5 +3,7 @@
 dot.zshrc.d/([^.].*) -- ~/.zshrc.d/\1
 herbstluftwm/(.*) -- ~/.config/herbstluftwm/\1
 bin/(.*) -- ~/bin/\1
+dot.js/(.*) -- ~/.js/\1
+dot.css/(.*) -- ~/.css/\1
 
 dot(\..*) -- ~/\1
