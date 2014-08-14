@@ -1,9 +1,5 @@
-setInterval(function() {
-  $('.new-tweets-bar').click();
-}, 5000);
-
 var blocker = function(event) {
-  if (event.ctrlKey) {
+  if (event.altKey) {
     event.stopImmediatePropagation();
   }
 };
