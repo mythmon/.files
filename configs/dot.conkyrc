@@ -10,7 +10,8 @@ draw_shades no
 use_xft yes
 xftfont Fira Mono:size=12
 gap_x 322
-gap_y 1421
+gap_y 0
+#gap_y 1421
 #gap_y 2621
 maximum_width 2136
 minimum_size 2136 0
@@ -25,12 +26,8 @@ own_window_type dock
 pad_percents 2
 short_units yes
 update_interval 1.0
-update_interval_on_battery 10.0
 use_spacer left
 if_up_strictness link
-
-#lua_load /home/mythmon/.conky.d/learn.lua
-#lua_draw_hook_post main
 
 color0 ffffff
 color1 888888
@@ -52,15 +49,10 @@ ${loadavg} \
 ${color2}|${color0} \
 \
 ${voffset -2}\
-${color1}${font Pizzadude Bullets:size=10}~${font}${color0} \
+${color1}${font pizzadude bullets:size=10}~${font}${color0} \
 ${voffset -2}\
 ${mem}B \
 ${color2}|${color0} \
-\
-${if_match ${battery_percent BAT0} < 5}\
-${if_updatenr 1}${color red}${endif}\
-${if_updatenr 2}${color0}${endif}\
-${endif}\
 \
 ${voffset 1}\
 ${font Heydings Icons:size=10}r${font} \
@@ -87,6 +79,7 @@ ${endif}\
 ${color2} |${color0} \
 \
 ${head /home/mythmon/.background 1} \
+${color2}|${color0} \
 \
 ${alignr}\
 ${color1}${time %Y-%m-%d}${color0} \

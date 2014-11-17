@@ -1,8 +1,12 @@
 # These aliases are generally in the form of if a given executable is on the
 # system, add an alias.
 
-alias g=git
-alias ll='ls -l'
+#alias ls='ls -v'
+alias ls='ls --color=if-tty --group-directories-first --human-readable --classify --sort=version'
+alias rm='rm -r'
+alias cp='cp -r'
+
+alias ll='ls -lv'
 
 # qmv -> default options
 if ( which qmv > /dev/null ); then
@@ -51,16 +55,16 @@ function col() {
     awk "{print ${colNums}}"
 }
 
-# journalctl helper.
-if ( which journalctl > /dev/null ); then
-    alias jlog='sudo journalctl -f -o cat -u'
-fi
 
-if ( which systemctl > /dev/null ); then
-    alias sstatus='sudo systemctl status'
-    alias sstart='sudo systemctl start'
-    alias sstop='sudo systemctl stop'
-    alias srestart='sudo systemctl restart'
-    alias senable='sudo systemctl enable'
-    alias sdisable='sudo systemctl disable'
-fi
+_GPG_MOUNT="/mnt/gpgkey"
+
+function gpgopen() {
+    gpg --verify "${_GPG_MOUNT}/op.py.asc" "${_GPG_MOUNT}/op.py" && \
+        "${_GPG_MOUNT}/op.py" open
+}
+
+function gpgclose() {
+    "${_GPG_MOUNT}/op.py" close
+    DEV=$(mount | grep "${_GPG_MOUNT}" | head -n 1 | col 1)
+    sudo eject $DEV && echo "Ejected"
+}

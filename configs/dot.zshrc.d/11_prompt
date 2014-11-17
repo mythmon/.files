@@ -6,7 +6,6 @@ setopt prompt_subst
 REPORTTIME=2
 
 host_color=$(hash_color $(hostname))
-#host_color=$(hash_color radium)
 
 autoload -Uz vcs_info
 if vcs_info 2> /dev/null; then
@@ -74,9 +73,25 @@ precmd_prompt () {
     fi
 }
 
+function zle-keymap-select zle-line-init () {
+    case $KEYMAP in
+        vicmd)
+            print -rn -- $terminfo[cvvis]  # block cursor
+            pscmdmode='⌘ '
+            ;;
+        viins|main)
+            print -rn -- $terminfo[cnorm] # normal cursor
+            pscmdmode=""
+            ;;
+    esac
+    zle reset-prompt
+}
+
 add-zsh-hook preexec preexec_prompt
 add-zsh-hook precmd precmd_prompt
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # ►
 PROMPT='${psvenv}${psret}${psglyph} '
-RPROMPT='${pspath}${psvcs}'
+RPROMPT='${pscmdmode}${pspath}${psvcs}'

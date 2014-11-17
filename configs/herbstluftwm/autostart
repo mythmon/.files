@@ -47,6 +47,8 @@ hc keybind $Mod-Shift-Escape spawn ${HOME}/bin/suspend
 hc keybind $Mod-n spawn renametag
 hc keybind $Mod-w spawn hcsrc
 hc keybind $Mod-m spawn ${HOME}/bin/monfix
+hc keybind $Mod-d detect_monitors
+hc keybind $Mod-x spawn ${HOME}/bin/fx
 
 # Volume bindings
 hc keybind $Mod-Alt-j spawn ${HOME}/bin/vol down
@@ -56,8 +58,11 @@ hc keybind $Mod-Alt-l spawn ${HOME}/bin/vol toggle
 hc keybind XF86AudioRaiseVolume spawn ${HOME}/bin/vol up
 hc keybind XF86AudioLowerVolume spawn ${HOME}/bin/vol down
 hc keybind XF86AudioMute spawn amixer ${HOME}/bin/vol toggle
-# Media keys (with rdiod)
-hc keybind XF86AudioPlay spawn curl -XPOST localhost:8572/api/player/togglePause
+# Media keys
+hc keybind XF86AudioPlay spawn playerctl play-pause
+hc keybind $Mod-Alt-slash spawn playerctl play-pause
+hc keybind $Mod-Alt-comma spawn playerctl previous
+hc keybind $Mod-Alt-period spawn playerctl next
 # Brightness bindings.
 hc keybind XF86MonBrightnessDown spawn xbacklight -dec 10
 hc keybind XF86MonBrightnessUp spawn xbacklight -inc 10

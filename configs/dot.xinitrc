@@ -18,7 +18,7 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 
 # Set up compose key
-setxkbmap -option compose:caps
+setxkbmap -option compose:ralt
 export GTK_IM_MODULE="xim"
 
 # Load .Xresources file, if it exists
@@ -26,13 +26,13 @@ export GTK_IM_MODULE="xim"
 
 # Some Daemons
 pulseaudio &
-urxvtd &
+#urxvtd &
 #source <(gnome-keyring-daemon)
 
-export SSH_AUTH_SOCK
-export GPG_AGENT_INFO
-export GNOME_KEYRING_CONTROL
-export GNOME_KEYRING_PID
+#export SSH_AUTH_SOCK
+#export GPG_AGENT_INFO
+#export GNOME_KEYRING_CONTROL
+#export GNOME_KEYRING_PID
 
 # # Things to do after hlwm starts.
 # {

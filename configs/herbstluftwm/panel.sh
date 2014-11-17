@@ -21,8 +21,8 @@ if [ -z "$geometry" ] ;then
 fi
 # geometry has the format: WxH+X+Y
 x=${geometry[0]}
-#y=${geometry[1]}
-y=$(( ${geometry[1]} + ${geometry[3]} - $panel_height ))
+y=${geometry[1]}
+#y=$(( ${geometry[1]} + ${geometry[3]} - $panel_height ))
 if [[ 0 -eq $monitor ]]; then
     panel_width=322
 else
@@ -54,7 +54,7 @@ function uniq_linebuffered() {
 }
 
 ########## Go! ##########
-herbstclient pad $monitor 5 5 $(( 5 + $panel_height )) 5
+herbstclient pad $monitor $(( 5 + $panel_height )) 5 5 5
 
 {
     # hlwm events

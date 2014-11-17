@@ -1,6 +1,29 @@
 if tty | grep pts >/dev/null 2>&1; then
-    bindkey -e
-    bindkey "[3~" delete-char
-    bindkey "[7~" beginning-of-line
-    bindkey "[8~" end-of-line
+    bindkey -v # vi mode
+    export KEYTIMEOUT=1 # 0.1 second timeout for multiple key bindings.
+
+    bindkey "[3~" delete-char         # delete key
+    bindkey "[7~" beginning-of-line   # home key
+    bindkey "[8~" end-of-line         # end key
+
+    # Use vim cli mode
+    bindkey '^P' up-history
+    bindkey '^N' down-history
+
+    # ctrl-r starts searching history backward
+    bindkey '^r' history-incremental-search-backward
+
+    rationalise-dot() {
+        if [[ $LBUFFER = *.. ]]; then
+            LBUFFER+=/../
+        elif [[ $LBUFFER = *../ ]]; then
+            LBUFFER+=../
+        else
+            LBUFFER+=.
+        fi
+    }
+    zle -N rationalise-dot
+    bindkey . rationalise-dot
+
+    source /usr/share/zsh/plugins/opp/opp.zsh
 fi

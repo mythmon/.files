@@ -1,0 +1,12 @@
+if ( which systemctl > /dev/null ); then
+    for action in status start stop restart enable disable; do
+        alias s$action="sudo systemctl $action"
+        alias su$action="systemctl --user $action"
+    done
+fi
+
+# journalctl helper.
+if ( which journalctl > /dev/null ); then
+    alias jlog='journalctl --follow --output=cat -u'
+    alias julog='journalctl --follow --output=cat --user-unit'
+fi

@@ -13,27 +13,21 @@ setopt longlistjobs      # display PID when suspending processes
 setopt nohup             # don't kill background jobs
 unsetopt beep            # shutup!
 
-# Colors for ls. sets LSCOLORS
-if [[ -f ~/.dircolors ]]; then
-    eval $(dircolors ~/.dircolors)
-else
-    eval $(dircolors)
-fi
+# Colors for ls. sets LS_COLORS
+eval $(dircolors)
 
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' expand prefix
 zstyle ':completion:*' ignore-parents parent pwd ..
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' max-errors 2
-zstyle ':completion:*' preserve-prefix '//[^/]##/'
-# Show menu if >5 completions
+#zstyle ':completion:*' preserve-prefix '//[^/]##/'
 zstyle ':completion:*' menu select
 
 # use colors for file completion
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # use groups for completion
-zstyle ':completion:*:descriptions' format \
-    "%{$fg[red]%}completing %B%d%b%{$reset_color%}"
+zstyle ':completion:*:descriptions' format "Completing %B%d%b%"
 zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*' group-name ''
 # warn if there are no matches
@@ -60,25 +54,11 @@ zstyle ':completion:*' matcher-list \
     'm:{[:lower:]}={[:upper:]} r:|[._-]=** r:|=**' \
     'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=** l:|=* r:|=*'
 
-zstyle :compinstall filename '$HOME/.zshrc'
-
 autoload -Uz compinit promptinit add-zsh-hook
 compinit
 
 # Make "words" delimited by more things (ie: path pieces instead of full paths)
 WORDCHARS=${WORDCHARS//[&=\/;!#%\{]}
-
-rationalise-dot() {
-    if [[ $LBUFFER = *.. ]]; then
-        LBUFFER+=/../
-    elif [[ $LBUFFER = *../ ]]; then
-        LBUFFER+=../
-    else
-        LBUFFER+=.
-    fi
-}
-zle -N rationalise-dot
-bindkey . rationalise-dot
 
 export PATH="$HOME/bin:$PATH:$HOME/.gem/ruby/2.0.0/bin:$HOME/node_modules/.bin"
 export CDPATH="$HOME"
@@ -86,12 +66,7 @@ export EDITOR="vim"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-alias ls='ls --color=if-tty --group-directories-first -hF'
-alias rm='rm -r'
-alias cp='cp -r'
-
-#fortune -ac
-task fortune
+#task-fortune
 
 # Include various sub-.zshrc files
 # but don't include vim .swp files

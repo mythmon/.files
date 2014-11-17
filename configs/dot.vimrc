@@ -1,10 +1,22 @@
-set nocompatible " Vim defaults, instead of vi
+" Vim defaults, instead of vi
+set nocompatible
+
+" Temporarily, for Vundle
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'vim-scripts/vim-auto-save'
+
+call vundle#end()
+
 " automatic syntax highlighting
 filetype plugin indent on
 syntax on
 
 set background=dark
-"colorscheme zellner
 
 " Local vimrc files
 set exrc                    " Enable per directory .vimrc files
@@ -26,6 +38,7 @@ set expandtab               " Tabs instead of spaces
 set magic                   " For regular expressions
 nma <leader>e :set lbr!<CR> " Break on words, not chars
 set mouse=a
+set viminfo=                " Disable .viminfo, because it can expose secrets
 
 " line numbers toggle
 nma <leader>n :set invnumber<CR>
@@ -40,7 +53,7 @@ set wildmenu
 set wildmode=list:longest
 
 set title
-set scrolloff=3
+set scrolloff=5
 set ruler
 set number
 

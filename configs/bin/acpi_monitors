@@ -91,7 +91,7 @@ acpi.on('ibm/hotkey', function(type, data) {
 
 function monitors(mode) {
   return function() {
-    childProcess.exec('monitors ' + mode);
+    childProcess.exec('/home/mythmon/bin/monitors ' + mode);
   };
 }
 

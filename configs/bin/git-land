@@ -31,3 +31,5 @@ if ( [[ $branch != 'master' ]] && yn "Clean up?" ); then
     git reset --hard upstream/master
     git branch -D $branch
 fi
+
+git rev-parse HEAD

@@ -1,8 +1,9 @@
 icon_size 20
 background "#224488"
 #transparent true
-geometry 5x1+2460+1420
+#geometry 5x1+2460+1420
 #geometry 5x1+2460+2620
+geometry 5x1+2460+0
 max_geometry 5x1
 icon_gravity NE
 dockapp_mode simple
