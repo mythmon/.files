@@ -9,9 +9,6 @@ dpi             ppi
 
 gee             9.81 m / s / s
 
-person          !
-people          person
-
 cookie          !
 cps             cookie / second
 click           !
@@ -37,6 +34,9 @@ doge            DOGE
 Olf             !       # Base unit of stench
 olf             Olf
 
+person          !
+people          person
+user            person
 shower          18 people
 
 widget          !       # Base unit of things
@@ -53,3 +53,44 @@ tesla_car       326 waterdensity gallon
 bill_nye        1.85 m
 
 word            !
+gem             !
+request         !
+
+AU              astronomicalunit
+au              AU
+
+# Kittens game
+catnip          !
+wood            !
+minerals        !
+coal            !
+iron            !
+titanium        !
+gold            !
+catpower        !
+science         !
+culture         !
+faith           !
+kittens         !
+starchat        !
+furs            !
+ivory           !
+unicorns        !
+blueprint       !
+wood            !
+beam            !
+slab            !
+plate           !
+steel           !
+gear            !
+scaffold        !
+ship            !
+parchment       !
+manuscript      !
+compendium      !
+megalith        !
+
+fiberlight      2|3 c
+clock           !
+
+portland_area   376 km^2

@@ -4,13 +4,8 @@ function hc() {
     herbstclient "$@"
 }
 
-# Get location of autostart file
-BASE="$(dirname $0)"
-
 # Theme
-hc lock
-
-# Wallpapers!
+# wallpaper
 xsetroot -solid \#248
 # colors
 color_active='#268bd2'
@@ -20,17 +15,16 @@ hc set frame_border_normal_color '#101010'
 hc set frame_bg_normal_color '#565656'
 hc set frame_bg_active_color '#345F0C'
 hc set frame_border_width 1
-hc set window_border_width 2
+hc set window_border_width 3
 hc set window_border_normal_color '#454545'
-hc set window_border_active_color '#268bd2'
+hc set window_border_active_color '#66abf2'
 hc set always_show_frame 1
-hc set frame_gap 3
+hc set frame_gap 2
 hc set frame_bg_transparent 1
-
-hc unlock
+hc set smart_frame_surroundings 0
+hc set smart_window_surroundings 0
 
 # Other setup.
-hc lock
 hc emit_hook reload
 
 # remove all existing keybindings
@@ -44,10 +38,8 @@ hc keybind $Mod-Return spawn urxvtc
 hc keybind $Mod-space spawn dmenu-launch
 hc keybind $Mod-Escape spawn ${HOME}/bin/lock
 hc keybind $Mod-Shift-Escape spawn ${HOME}/bin/suspend
-hc keybind $Mod-n spawn renametag
 hc keybind $Mod-w spawn hcsrc
-hc keybind $Mod-m spawn ${HOME}/bin/monfix
-hc keybind $Mod-d detect_monitors
+hc keybind $Mod-m spawn ${HOME}/bin/monitors
 hc keybind $Mod-x spawn ${HOME}/bin/fx
 
 # Volume bindings
@@ -57,15 +49,32 @@ hc keybind $Mod-Alt-l spawn ${HOME}/bin/vol toggle
 # Dedicated audio keys
 hc keybind XF86AudioRaiseVolume spawn ${HOME}/bin/vol up
 hc keybind XF86AudioLowerVolume spawn ${HOME}/bin/vol down
-hc keybind XF86AudioMute spawn amixer ${HOME}/bin/vol toggle
+hc keybind XF86AudioMute spawn ${HOME}/bin/vol toggle
+hc keybind XF86AudioMicMute spawn ${HOME}/bin/vol toggle-mic
+
 # Media keys
 hc keybind XF86AudioPlay spawn playerctl play-pause
 hc keybind $Mod-Alt-slash spawn playerctl play-pause
 hc keybind $Mod-Alt-comma spawn playerctl previous
 hc keybind $Mod-Alt-period spawn playerctl next
+
 # Brightness bindings.
 hc keybind XF86MonBrightnessDown spawn xbacklight -dec 10
 hc keybind XF86MonBrightnessUp spawn xbacklight -inc 10
+hc keybind Shift+XF86MonBrightnessDown spawn xbacklight -dec 1
+hc keybind Shift+XF86MonBrightnessUp spawn xbacklight -inc 1
+hc keybind $Mod-minus spawn xbacklight -dec 10
+hc keybind $Mod-equal spawn xbacklight -inc 10
+hc keybind Shift+$Mod-minus spawn xbacklight -dec 1
+hc keybind Shift+$Mod-equal spawn xbacklight -inc 1
+
+# Wifi kill switch
+hc keybind XF86WLAN spawn notify-send -i notification-network-wireless-off "WiFi toggled"
+
+# Grab a shell
+hc keybind Mod4+e spawn sidebar 'zsh'
+hc keybind Mod4+t spawn sidebar 'task; task shell'
+hc keybind Mod4+n spawn sidebar 'vim ~/notes/'
 
 # tags
 TAG_NAMES=( {1..9} 0 )
@@ -129,21 +138,13 @@ hc set focus_follows_mouse 0
 # rules
 hc unrule -F
 hc rule focus=on # Normally focus new windows.
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' not instance="gnucash" pseudotile=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
-hc rule class="B2g" pseudotile=on
-hc rule class="crashreporter" pseudotile=on
-
-# Set up multi monitors
-hc detect_monitors
+hc rule windowtype="_NET_WM_WINDOW_TYPE_UTILITY" class="VidyoDesktop" manage=off
 
 # find the panel
-panel=~/.config/herbstluftwm/panel.sh
 pkill panel.sh
-[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
-    $panel $monitor &
-done
+~/.config/herbstluftwm/panel.sh &
 
 function ensure() {
     pgrep $1 || $1 &
@@ -152,5 +153,4 @@ function ensure() {
 ensure stalonetray
 ensure conky
 ensure nm-applet
-
-hc unlock
+ensure twmnd

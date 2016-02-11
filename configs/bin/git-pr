@@ -27,4 +27,4 @@ branch=$(git branch | grep '^*' | awk '{print $2}')
 
 git push origin $branch:$branch
 
-xdg-open "https://github.com/$origin/pull/new/$branch" > /dev/null
+browser "https://github.com/$origin/pull/new/$branch" > /dev/null

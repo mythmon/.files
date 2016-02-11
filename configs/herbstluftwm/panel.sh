@@ -4,14 +4,12 @@
 monitor=${1:-0}
 
 ########## OPTIONS ##########
-panel_height=20
-font="Fira Mono:size=12"
+panel_height=16
+font="Ubuntu Mono:size=11"
 bgcolor="#224488"
 selbg=$(herbstclient get window_border_active_color)
 selfg='#101010'
 sep="^bg()^fg($selbg)|"
-
-net_dev="wlan0"
 
 ########## VARIABLES ##########
 geometry=( $(herbstclient monitor_rect "$monitor") )
@@ -22,31 +20,7 @@ fi
 # geometry has the format: WxH+X+Y
 x=${geometry[0]}
 y=${geometry[1]}
-#y=$(( ${geometry[1]} + ${geometry[3]} - $panel_height ))
-if [[ 0 -eq $monitor ]]; then
-    panel_width=322
-else
-    panel_width=${geometry[2]}
-fi
-
-# Try to find textwidth binary.
-# In e.g. Ubuntu, this is named dzen2-textwidth.
-if [ -e "$(which textwidth 2> /dev/null)" ] ; then
-    textwidth="textwidth";
-elif [ -e "$(which dzen2-textwidth 2> /dev/null)" ] ; then
-    textwidth="dzen2-textwidth";
-else
-    echo "This script requires the textwidth tool of the dzen2 project."
-    exit 1
-fi
-
-# true if we are using the svn version of dzen2
-dzen2_version=$(dzen2 -v 2>&1 | head -n 1 | cut -d , -f 1|cut -d - -f 2)
-if [ -z "$dzen2_version" ] ; then
-    dzen2_svn="true"
-else
-    dzen2_svn=""
-fi
+panel_width=190
 
 # Functions
 function uniq_linebuffered() {
@@ -54,13 +28,7 @@ function uniq_linebuffered() {
 }
 
 ########## Go! ##########
-herbstclient pad $monitor $(( 5 + $panel_height )) 5 5 5
-
-{
-    # hlwm events
-    herbstclient --idle
-
-} | {
+herbstclient --idle | {
 
     # Processing of events
     TAGS=( $(herbstclient tag_status $monitor) )
@@ -102,7 +70,6 @@ herbstclient pad $monitor $(( 5 + $panel_height )) 5 5 5
             fi
         done
         echo -n "$sep"
-        #echo -n "^bg()^fg() ${windowtitle//^/^^}"
 
         # Finish output
         echo
@@ -119,16 +86,9 @@ herbstclient pad $monitor $(( 5 + $panel_height )) 5 5 5
             quit_panel|reload)
                 exit
                 ;;
-            focus_changed|window_title_changed)
-                max=50
-                title="${cmd[@]:2}"
-                if [[ ${#title} -gt $max ]]; then
-                    title="${title:0:$((max - 3))}..."
-                fi
-                windowtitle="${title}"
-                ;;
             *)
                 echo "Unknown event: ${cmd[0]}" >&2
+                ;;
         esac
     done
 } | dzen2 -w $panel_width -x $x -y $y -fn "$font" -h $panel_height \

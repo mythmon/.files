@@ -1,6 +1,6 @@
-# Use pacman-color if we have it
-if ( which pacman-color &> /dev/null ); then
-    alias pac='sudo pacman-color'
+# Use powerpill if we have it
+if ( which powerpill &> /dev/null ); then
+    alias pac='sudo powerpill'
 else
     alias pac='sudo pacman'
 fi

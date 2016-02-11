@@ -1,5 +1,7 @@
-# Greek
+# include default for current locale.
+include "%L"
 
+# Greek
 <Multi_key> <g> <a>                : "α"   U03B1   # GREEK SMALL LETTER ALPHA
 <Multi_key> <g> <A>                : "Α"   U0391   # GREEK CAPITAL LETTER ALPHA
 <Multi_key> <g> <b>                : "β"   U03B2   # GREEK SMALL LETTER BETA
@@ -12,8 +14,8 @@
 <Multi_key> <g> <E>                : "Ε"   U0395   # GREEK CAPITAL LETTER EPSILON
 <Multi_key> <g> <z>                : "ζ"   U03B6   # GREEK SMALL LETTER ZETA
 <Multi_key> <g> <Z>                : "Ζ"   U0396   # GREEK CAPITAL LETTER ZETA
-# <Multi_key> <g> <>                : "η"   U03B7   # GREEK SMALL LETTER ETA
-# <Multi_key> <g> <>                : "Η"   U0397   # GREEK CAPITAL LETTER ETA
+<Multi_key> <g> <n>                : "η"   U03B7   # GREEK SMALL LETTER ETA
+<Multi_key> <g> <N>                : "Η"   U0397   # GREEK CAPITAL LETTER ETA
 # <Multi_key> <g> <>                : "θ"   U03B8   # GREEK SMALL LETTER THETA
 # <Multi_key> <g> <>                : "Θ"   U0398   # GREEK CAPITAL LETTER THETA
 <Multi_key> <g> <i>                : "ι"   U03B9   # GREEK SMALL LETTER IOTA
@@ -52,10 +54,15 @@
 
 # Shapes
 <Multi_key> <less> <3>             : "❤"   U2764   # HEAVY BLACK HEART
+<Multi_key> <s> <n> <o> <w>        : "☃"   U2603   # SNOWMAN
 
 # Misc
 <Multi_key> <s> <f>                : "ƒ"   UFB00   # LATIN SMALL LETTER F WITH HOOK
-<Multi_key> <(> <r> <)>            : "®"   UC2AE   # REGISTERED SIGN
 <Multi_key> <s> <h> <y>            : "�"   UC2AD   # SOFT HYPHEN
 <Multi_key> <i> <n> <f>            : "∞"   U8734   # INFINITY
-<Multi_key> <l> <b>                : "£"   U00A3   # POUND SIGN
+
+<Multi_key> <o> <^>                : "ô"   U00F4   # LATIN SMALL LETTER O WITH CIRCUMFLEX
+<Multi_key> <^> <o>                : "ô"   U00F4   # LATIN SMALL LETTER O WITH CIRCUMFLEX
+
+# Emoji
+<Multi_Key> <e> <p> <o> <o>        : "💩"   U1F4A9  # PILE OF POO

@@ -1,32 +1,32 @@
 [user]
-  name = Mike Cooper
-  email = mythmon@gmail.com
+    name = Mike Cooper
+    email = mythmon@gmail.com
 [core]
-  editor = vim
-  excludesfile = ~/.gitignore_global
+    editor = vim
+    excludesfile = ~/.gitignore_global
 [color]
-	ui = true
+    ui = true
 [apply]
-	whitespace = fix
+    whitespace = fix
 [rerere]
-	enabled = 1
+    enabled = 1
 [gist]
-	browse = no
+    browse = no
 [alias]
-	sub = !sh -c 'git submodule sync >/dev/null && git submodule update --init --recursive'
     head = rev-parse HEAD
-    net = log --graph --all --decorate
     up = !sh -c 'git pull upstream master && git push origin master'
     worddiff = diff --color-words --word-diff-regex='[A-z0-9_\\-]+|[^[:space:]]'
+    net = log --graph --all --decorate --abbrev-commit --date-order
+    unadd = reset HEAD
 [merge]
-	conflictstyle = diff3
+    conflictstyle = diff3
 [push]
-	default = simple
+    default = simple
 [rebase]
-	autosquash = yes
+    autosquash = yes
 [credential]
-	helper = /usr/share/git/credential/gnome-keyring/git-credential-gnome-keyring
-[hub]
-	protocol = https
+    helper = /usr/share/git/credential/gnome-keyring/git-credential-gnome-keyring
 [help]
-	autocorrect = 0
+    autocorrect = 0
+[hub]
+    protocol = https

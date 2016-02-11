@@ -1,57 +1,57 @@
 #!/bin/bash
 
-export DISPLAY=${DISPLAY:-:0.0}
-
-echo "monitors $@ - DISPLAY=$DISPLAY" >> /home/mythmon/monitors.log
-
-
-function xrandr() {
-    echo xrandr "$@"
-    /usr/bin/xrandr "$@"
-}
+set -eu
 
 function hc() {
     echo "hc $@"
     herbstclient "$@"
 }
 
-{
-    mode=$1
+mode=${1:-}
 
-    if [[ -z $mode ]]; then
-        mode=$(echo -e "laptop\nwork\nhome" | dmenu -p "Monitor layout: ")
-    fi
+if [[ -z $mode ]]; then
+    mode=$(echo -e "laptop\nwork\nhome" | dmenu -p "Monitor layout: ")
+fi
 
-    for output in DP1 HDMI1 DP2 HDMI2; do
-        xrandr --output $output --off
-    done
+case $mode in
+    laptop)
+        xrandr --output eDP1 --pos 0x0 --mode 1366x768 --output HDMI1 --off --output DP1 --off --output DP2-1 --off --output DP2-2 --off
+        hc set_monitors 1366x768+0+0
+        hc pad 0 16 0 0 0
+        xbacklight -set 30
+        vol mv alsa_output.pci-0000_00_1b.0.analog-stereo
+        ;;
+    home)
+        xrandr --output eDP1 --pos 1920x500 --output HDMI1 --mode 1920x1080 --pos 0x0
+        setxkbmap -option compose:ralt,caps:escape
+        hc set_monitors 1920x1080+0+0 1366x768+1920+500
+        hc pad 0 16 0 0 0
+        hc pad 1 0 0 0 0
+        xbacklight -set 80
+        vol mv alsa_output.pci-0000_00_03.0.hdmi-stereo
+        ;;
+    work)
+        xrandr --output DP2-1 --mode 1920x1200 --pos 0x0
+        xrandr --output DP2-2 --mode 1920x1200 --pos 1920x0
+        xrandr --output eDP1 --off
+        pactl set-sink-port alsa_output.pci-0000_00_1b.0.analog-stereo analog-output-headphones
+        hc set_monitors 1920x1200+0+0 1920x1200+1920+0
+        hc pad 0 16 0 0 0
+        hc pad 1 0 0 0 0
+        xbacklight -set 80
+        vol mv alsa_output.pci-0000_00_1b.0.analog-stereo
+        ;;
+    *)
+        echo "Unknown mode $mode"
+        exit 1
+esac
 
-    case $mode in
-        work)
-            xrandr --output eDPI1 --mode 2560x1440 --pos 0x0
-            xrandr --output DP2 --mode 1920x1200 --pos 2560x0
-            hc set_monitors 2560x1440+0+0 1920x1200+2560+0
-            hc emit_hook quit_panel
-            ~/.config/herbstluftwm/panel.sh 0 &
-            ~/.config/herbstluftwm/panel.sh 1 &
-            ;;
-        laptop)
-            xrandr --output eDPI1 --mode 2560x1440 --pos 0x0
-            herbstclient set_monitors 2560x1440+0+0
-            hc emit_hook quit_panel
-            ~/.config/herbstluftwm/panel.sh 0 &
-            ;;
-        home)
-            xrandr --output HDMI2 --mode 1920x1080 --pos 0x0
-            xrandr --output eDPI1 --mode 2560x1440 --pos 1920x0
-            herbstclient set_monitors 1920x1080+0+0 2560x1440+1920+0
-            hc emit_hook quit_panel
-            ~/.config/herbstluftwm/panel.sh 0 &
-            ~/.config/herbstluftwm/panel.sh 1 &
-            ;;
-        *)
-            echo "Unknown mode $mode"
-            exit 1
-    esac
+# comment all monmod lines in conkyrc
+sed -ie 's/^\([^-].*-- monmod = .*\)$/--\1/' ~/.conkyrc
+# uncomment the one that matches the current mode.
+sed -ie 's/^--\(.*-- monmod = '"$mode"'\)$/\1/' ~/.conkyrc
 
-} >> monitors.log 2>> monitors.log
+hc reload
+
+pkill stalonetray
+stalonetray &

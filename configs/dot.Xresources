@@ -1,20 +1,30 @@
 URxvt.scrollBar: false
-URxvt.cursorBlink: true
+URxvt.cursorBlink: false
 URxvt.imLocale: en_US.utf8
-URxvt.termName: screen-256color-bce
+!URxvt.termName: screen-256color
 URxvt.fading: 0
 URxvt.saveLines: 65535
 URxvt.visualBall: true
 URxvt.lineSpace: 1
 
-URxvt.perl-ext-common: default,url-select,font-size
+URxvt.perl-ext-common: default,keyboard-select,clipboard,matcher,url-picker
 
 ! launchers
-URxvt.url-select.launcher: urxvt_launcher
-URxvt.url-select.underline: true
-URxvt.url-select.button: 3
+URxvt.url-picker.launcher: urxvt_launcher
+!URxvt.url-select.launcher: urxvt_launcher
+!URxvt.url-select.underline: true
+!URxvt.url-select.button: 3
 URxvt.matcher.pattern.1: \\b(https?:\/\/[^ ]+)\\b
-URxvt.matcher.pattern.2: \\b(([Bb][Uu][Gg]) ?#?[0-9]+)\\b
+URxvt.matcher.pattern.2: \\b[Bb][Uu][Gg] ?#?[0-9]+\\b
+URxvt.url-picker.order: descending
+
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+URxvt.keysym.M-c:   perl:clipboard:copy
+URxvt.keysym.M-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+! ctrl+enter
+URxvt.keysym.C-0xff0d:    perl:url-picker
 
 URxvt.iso14755_52: false
 URxvt.iso14755: false
@@ -26,25 +36,23 @@ URxvt.shading: 0
 URxvt.tintColor: white
 
 ! Font
-Xft.dpi: 96
+Xft.dpi: 100
 Xft.antialias: true
 Xft.rgba: rgba
 Xft.hinting: true
 Xft.hinstyle: hintslight
 
 !URxvt.font: xft:Fira Mono:style=Regular
-URxvt.font: xft:Source Code Pro for Powerline:style=regular, \
-            xft:Ubuntu Mono:style=Regular
+!URxvt.font: xft:Source Code Pro for Powerline:style=regular, \
+!            xft:Ubuntu Mono:style=Regular
+!URxvt.font: xft:Ubuntu Mono:style=Regular:size=9
+URxvt.font: xft:Source Code Pro for Powerline:style=Regular:size=9
 
 !Scrollback
 URxvt*scrollTtyOutput: false
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
 URxvt*saveLines: 1000000
-
-! Bindings
-URxvt.keysym.C-Up: perl:font-size:increase
-URxvt.keysym.C-Down: perl:font-size:decrease
 
 !Color scheme:
 URxvt*background: #000000

@@ -2,6 +2,8 @@ HISTFILE=~/.zsh/history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
+ttyctl -f
+
 setopt autocd            # cd to directory without saying cd.
 setopt extendedglob      # Better globbing.
 setopt extended_history  # Put timestamp and runtime in history file
@@ -16,12 +18,16 @@ unsetopt beep            # shutup!
 # Colors for ls. sets LS_COLORS
 eval $(dircolors)
 
+fpath=(~/.zsh/completions $fpath)
+
+autoload -Uz compinit promptinit add-zsh-hook
+compinit
+
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' expand prefix
 zstyle ':completion:*' ignore-parents parent pwd ..
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' max-errors 2
-#zstyle ':completion:*' preserve-prefix '//[^/]##/'
 zstyle ':completion:*' menu select
 
 # use colors for file completion
@@ -54,15 +60,16 @@ zstyle ':completion:*' matcher-list \
     'm:{[:lower:]}={[:upper:]} r:|[._-]=** r:|=**' \
     'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=** l:|=* r:|=*'
 
-autoload -Uz compinit promptinit add-zsh-hook
-compinit
-
 # Make "words" delimited by more things (ie: path pieces instead of full paths)
 WORDCHARS=${WORDCHARS//[&=\/;!#%\{]}
 
-export PATH="$HOME/bin:$PATH:$HOME/.gem/ruby/2.0.0/bin:$HOME/node_modules/.bin"
-export CDPATH="$HOME"
+export PATH="$HOME/.gem/ruby/2.0.0/bin:$PATH"
+export PATH="$HOME/node_modules/.bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+
 export EDITOR="vim"
+export BROWSER="browser"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

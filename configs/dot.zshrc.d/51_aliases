@@ -56,15 +56,25 @@ function col() {
 }
 
 
-_GPG_MOUNT="/mnt/gpgkey"
+_GPG_MOUNT="/media/gpgkey"
+_GPG_USB_DEVICE="/dev/disk/by-uuid/28cb0eda-b996-4dab-9c7c-6ba8e725127b"
 
 function gpgopen() {
+    if [[ ! -f "${_GPG_MOUNT}/op.py" ]]; then
+        sudo mount "${_GPG_USB_DEVICE}" "${_GPG_MOUNT}"
+    fi
     gpg --verify "${_GPG_MOUNT}/op.py.asc" "${_GPG_MOUNT}/op.py" && \
-        "${_GPG_MOUNT}/op.py" open
+        python "${_GPG_MOUNT}/op.py" open
 }
 
 function gpgclose() {
-    "${_GPG_MOUNT}/op.py" close
+    python "${_GPG_MOUNT}/op.py" close
     DEV=$(mount | grep "${_GPG_MOUNT}" | head -n 1 | col 1)
     sudo eject $DEV && echo "Ejected"
 }
+
+pb () {
+    curl -F "c=@${1:--}" https://ptpb.pw
+}
+
+alias sus='sort | uniq -c + sort -n'

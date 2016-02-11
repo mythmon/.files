@@ -8,7 +8,13 @@ LONG_ENCODED=$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$LONG")
 
 SHORT=$(curl -s "http://api.bitly.com/v3/shorten?login=${USER}&apiKey=${API_KEY}&longUrl=${LONG_ENCODED}&format=txt")
 
-echo -n $SHORT | xclip
+if [[ $SHORT == "ALREADY_A_BITLY_LINK" ]]; then
+    SHORT=$LONG
+fi
+
+echo -n $SHORT | xclip -selection primary
+echo -n $SHORT | xclip -selection secondary
+echo -n $SHORT | xclip -selection clipboard
 notify-send "Shortened URL is on the clipboard."
 
 echo $SHORT

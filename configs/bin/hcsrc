@@ -30,6 +30,12 @@ PROJECT=$(ls ${HOME}/src | dmenu -p "Project ($direction): ")
 DIR="${HOME}/src/${PROJECT}"
 [[ ! -d $DIR ]] && echo "Project '$PROJECT' not found." && exit 2
 
+
+# temporary simplications
+atom "$DIR"
+exit 0
+
+
 TAG=$(hc tag_status | tr '\t' '\n' | sed -n 's/^#//p')
 
 hc load "$TAG" "$LAYOUT"

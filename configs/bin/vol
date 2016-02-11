@@ -1,19 +1,53 @@
 #!/bin/bash
 
-case $1 in
-toggle)
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
-    ;;
-up)
-    # unmute
-    pactl set-sink-mute @DEFAULT_SINK@ 0
-    pactl set-sink-volume @DEFAULT_SINK@ +5%
-    ;;
-down)
-    pactl set-sink-volume @DEFAULT_SINK@ -- -5%
-    ;;
-*)
-    echo "Usage: $0 [toggle|up|down]"
-    exit 1
-    ;;
+function vol_op() {
+    cmd=$1
+    sink=${2:-@DEFAULT_SINK@}
+    source=${2:-@DEFAULT_SOURCE@}
+
+    case $cmd in
+        toggle)
+            pactl set-sink-mute $sink toggle
+            ;;
+        up)
+            # unmute
+            pactl set-sink-mute $sink 0
+            pactl set-sink-volume $sink +2db
+            ;;
+        down)
+            pactl set-sink-volume $sink -2db
+            ;;
+        toggle-mic)
+            pactl set-source-mute $source toggle
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+}
+
+cmd=$1
+
+case $cmd in
+    toggle|up|down)
+        pacmd list-sinks | perl -ne 'print "$1\n" if /index: (\d)/' | while read sink; do
+            vol_op $cmd $sink
+        done
+        ;;
+    toggle-mic)
+        vol_op $cmd
+        ;;
+    mv)
+        cmd=$1
+        sink=$2
+
+        pactl set-default-sink $sink
+        pactl list sink-inputs | perl -ne 'print "$1\n" if /^Sink Input #(\d+)$/' | while read input; do
+            pactl move-sink-input $input $sink
+        done
+        ;;
+    *)
+        echo "Usage: $0 [toggle|up|down|mv SINK]"
+        exit 1
+        ;;
 esac

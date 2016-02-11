@@ -1,33 +1,49 @@
 #!/usr/bin/env python2.7
 
+import datetime
+import re
 import subprocess
 import sys
-import datetime
 
 
 GITCMD = '/usr/bin/git'
 
+ignore_branch_regexes = [
+    re.compile(r'master'),
+    re.compile(r'deployed/.*'),
+    re.compile(r'pr/.*'),
+]
+
 
 def get_details(ref):
-    last_commit = subprocess.check_output(
-        [GITCMD, 'show', '--format=%h::%at', ref])
-    last_commit = last_commit.splitlines()[0].split('::')
+    last_commit = (subprocess
+        .check_output([GITCMD, 'show', '--format=%h::%at', ref])
+        .splitlines()[0]
+        .split('::'))
     datestamp = datetime.datetime.fromtimestamp(int(last_commit[1]))
     age = datetime.datetime.now() - datestamp
-    return (ref, last_commit[0], age, datestamp)
+    return (ref, last_commit[0], age, format_age(age))
+
+
+def format_age(age):
+    hours = int(age.seconds / 3600)
+    minutes = int((age.seconds - (hours * 3600)) / 60)
+    return '{0:>2}d {1:>2}h {2:>2}m'.format(age.days, hours, minutes)
 
 
 def main(argv):
     output = []
     branches = subprocess.check_output([GITCMD, 'branch'])
-    for mem in branches.splitlines():
-        mem = mem.lstrip('*').strip()
-        output.append(get_details(mem))
+    for branch in branches.splitlines():
+        branch = branch.lstrip('*').strip()
+        if any(regex.match(branch) for regex in ignore_branch_regexes):
+            continue
+        output.append(get_details(branch))
 
     output.sort(key=lambda mem: -mem[2])
 
     for mem in output:
-        print '%-30s %-8s %s (%s)' % mem
+        print '{0:<35}{1:^13}{3}'.format(*mem)
 
 
 if __name__ == '__main__':

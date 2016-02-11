@@ -9,6 +9,8 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/vim-auto-save'
+Plugin 'jamessan/vim-gnupg'
+Plugin 'rust-lang/rust.vim'
 
 call vundle#end()
 

@@ -13,17 +13,5 @@ if tty | grep pts >/dev/null 2>&1; then
     # ctrl-r starts searching history backward
     bindkey '^r' history-incremental-search-backward
 
-    rationalise-dot() {
-        if [[ $LBUFFER = *.. ]]; then
-            LBUFFER+=/../
-        elif [[ $LBUFFER = *../ ]]; then
-            LBUFFER+=../
-        else
-            LBUFFER+=.
-        fi
-    }
-    zle -N rationalise-dot
-    bindkey . rationalise-dot
-
     source /usr/share/zsh/plugins/opp/opp.zsh
 fi

@@ -1,87 +1,66 @@
-border_inner_margin 0
-cpu_avg_samples 3
-default_color white
-default_outline_color black
-default_shade_color black
-double_buffer 1
-draw_graph_borders no
-draw_outline yes
-draw_shades no
-use_xft yes
-xftfont Fira Mono:size=12
-gap_x 322
-gap_y 0
-#gap_y 1421
-#gap_y 2621
-maximum_width 2136
-minimum_size 2136 0
-net_avg_samples 2
-no_buffers yes
-own_window yes
-own_window_colour 224488
-own_window_transparent no
-#own_window_hints undecorated,sticky,skip_taskbar,skip_pager
-own_window_hints sticky
-own_window_type dock
-pad_percents 2
-short_units yes
-update_interval 1.0
-use_spacer left
-if_up_strictness link
+-- vim: ft=lua
+conky.config = {
+    border_inner_margin = 0,
+    cpu_avg_samples = 3,
+    default_color = 'white',
+    default_bar_width = 30,
+    default_bar_height = 8,
+    double_buffer = true,
+    draw_graph_borders = false,
+    draw_shades = false,
+    use_xft = true,
+    font = 'Ubuntu Mono:size=9',
+    gap_x = 192,
+    gap_y = 754,  -- monmod = laptop
+--    gap_y = 1186,  -- monmod = work
+--    gap_y = 1255,  -- monmod = home
+    minimum_width = 1094,
+    minimum_height = 14,
+    maximum_width = 1094,
+    net_avg_samples = 2,
+    no_buffers = true,
+    own_window = true,
+    own_window_colour = '224488',
+    own_window_type = 'dock',
+    own_window_argb_visual = true,
+    pad_percents = 2,
+    short_units = true,
+    update_interval = 1.0,
+    use_spacer = 'left',
+    if_up_strictness = 'link',
 
-color0 ffffff
-color1 888888
-color2 268bd2
+    color0 = 'eeeeee',
+    color1 = '888888',
+    color2 = '268bd2',
+    color3 = 'ff0000'
+}
 
-TEXT
-${goto 300}\
-${voffset -4}\
-${color1}${font PizzaDude Bullets:size=10}Y${font}${color0} \
-${voffset -2}\
+conky.text = [[
+${voffset 1}\
+${color2}|${color0} \
 ${cpu}% \
 ${freq_g}GHz \
 ${color2}|${color0} \
 \
-${voffset -1}\
-${color1}${font Pizzadude Bullets:size=10}8${font}${color0} \
-${voffset -2}\
 ${loadavg} \
 ${color2}|${color0} \
 \
-${voffset -2}\
-${color1}${font pizzadude bullets:size=10}~${font}${color0} \
-${voffset -2}\
 ${mem}B \
 ${color2}|${color0} \
 \
-${voffset 1}\
-${font Heydings Icons:size=10}r${font} \
-${voffset -2}\
-${battery_short BAT0} ${battery_time} \
-\
+Bat: \
+${battery_bar 8,15 BAT0}\
+${battery_bar 8,45 BAT1} \
 ${color2}|${color0} \
 \
-${voffset -2}\
-${color1}${font Heydings Icons:size=10}3${font}${color0} \
-${voffset -2}\
-${if_up enp0s25}\
-${addr enp0s25}\
-${endif}\
-\
-${if_up enp0s25}${if_up wlp3s0}\
- / \
-${endif}${endif}\
-\
-${if_up wlp3s0}\
-${wireless_essid wlp3s0} \
-${addr wlp3s0}\
-${endif}\
+Core:${acpitemp}°C\
 ${color2} |${color0} \
 \
-${head /home/mythmon/.background 1} \
-${color2}|${color0} \
+Brightness:${execibar 1 xbacklight}\
+${color2} |${color0} \
 \
 ${alignr}\
 ${color1}${time %Y-%m-%d}${color0} \
 ${time %H:%M:%S} \
 ${color2}|${color0}
+]]
